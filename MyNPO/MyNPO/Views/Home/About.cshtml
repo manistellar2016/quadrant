@@ -5,3 +5,50 @@
 <h3>@ViewBag.Message</h3>
 
 <p>Use this area to provide additional information.</p>
+
+<div class="stl-pnl-body">
+    <div class="stl-dn-tab-body">
+        <div class="form-body">
+            <form action=" https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
+                <input type="hidden" name="cmd" value="_s-xclick">
+                <input type="hidden" name="cmd" value="_s-T3">
+                <input type="hidden" name="hosted_button_id" value="NGKPDKQ9WHRGJ">
+                <div class="entry-feild">
+                    <label for="email">Donation options</label>
+                    <select name="os0">
+                        <option value="Be a Devotee">Be a Devotee : $31.00 USD - monthly</option>
+                        <option value="Make an impact">Make an impact : $51.00 USD - monthly</option>
+                        <option value="See the difference">See the difference : $101.00 USD - monthly</option>
+                    </select>
+                    @*<input type="text" id="os0" name="os0" placeholder="Enter The Donation Amount"   />*@
+                </div>
+                <div class="entry-feild">
+                    <label for="dnremail">Donar's Email ID</label>
+                    <input type="email" id="dnremail" name="dnremail" placeholder="Enter Your Email">
+                </div>
+
+                <div class="entry-feild text-center">
+                    <button type="submit" class="btn stl-btn stl-send stl-bynow">Subscribe</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="stl-dn-tab-body">
+        <div class="form-body">
+
+            <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+                <input type="hidden" name="cmd" value="_s-xclick">
+                <input type="hidden" name="hosted_button_id" value="GVDSC9R7WLE54">
+                <div class="entry-feild">
+                    <label for="dnremail">Donar's Email ID</label>
+                    <input type="email" id="dnremail" name="dnremail" placeholder="Enter Your Email">
+                </div>
+                <div class="entry-feild text-center">
+                    <button type="submit" class="btn stl-btn stl-send stl-bynow">Make a Donation</button>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+</div>

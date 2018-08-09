@@ -1,5 +1,7 @@
-﻿using System;
+﻿using MyNPO.DataAccess;
+using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -10,6 +12,9 @@ namespace MyNPO.Controllers
     {
         public ActionResult Index()
         {
+            var connectionString = ConfigurationManager.AppSettings["DbConnectionString"];
+            var entityContext = new EntityContext(connectionString);
+            var linfos= entityContext.loginInfos.ToList();
             return View();
         }
 
