@@ -187,6 +187,12 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\akhanda-parayanam-aug-18th[1].jpg" />
+    <Content Include="Images\ganapathi-navagraha-homam[1].jpg" />
+    <Content Include="Images\saibaba-seattle-temple-hours[1].jpg" />
+    <Content Include="Images\satyanarayana-vratham-august-25th[1].jpg" />
+    <Content Include="Images\varalakshmi-vratam-august-24th[1].jpg" />
+    <Content Include="Scripts\Animation.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
@@ -203,6 +209,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\thumbnailshow.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -222,6 +229,7 @@
     <Content Include="Views\Registration\Delete.cshtml" />
     <Content Include="Views\Registration\Details.cshtml" />
     <Content Include="Views\Registration\Edit.cshtml" />
+    <Content Include="Views\Home\Donation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
