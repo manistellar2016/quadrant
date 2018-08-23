@@ -11,16 +11,21 @@ namespace MyNPO.Models
     {
         [Key]       
         public Guid PrimaryId { get; set; }
-        public string FirstName { get; set; }
+        
+        public string FirstName { get; set; }      
+        
         public string LastName { get; set; }
-        public DateTime Dob { get; set; }
+        [DisplayFormat(DataFormatString = "{0:MM-dd-yyyy}")]
+
+        public DateTime DateOfBirth { get; set; }
         public string MobileNo { get; set; }
         public string Email { get; set; }
         public string City { get; set; }
         public string ZipCode { get; set; }
         public string Address { get; set; }
         public string MaritalStatus { get; set; }
-        public DateTime MarriageDate { get; set; }
+        [DisplayFormat(DataFormatString = "{0:MM-dd-yyyy}")]
+        public DateTime? MarriageDate { get; set; }
         public int NoOfDependents { get; set; }
         public List<DependentInfo> DependentDetails { get; set; }
     }

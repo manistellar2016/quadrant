@@ -13,12 +13,12 @@ namespace MyNPO.Controllers
     public class RegistrationController : Controller
     {
         static string connectionString = ConfigurationManager.AppSettings["DbConnectionString"];
-        EntityContext entityContext = new EntityContext(connectionString);
+        EntityContext entityContext = new EntityContext();
         // GET: Registration
         public ActionResult Index()
         {
             var it=entityContext.familyInfos.ToList();
-            it.ForEach(q => q.DependentDetails = entityContext.dependentInfos.Where(t => t.PrimaryId == q.PrimaryId).ToList());           
+            it.ForEach(q => q.DependentDetails = entityContext.dependentInfos.Where(t => t.PrimaryId == q.PrimaryId).ToList());            
             return View(it);
         }
 
@@ -49,9 +49,12 @@ namespace MyNPO.Controllers
         public ActionResult Create(FamilyInfo familyInfo)
         {
             try
-            {
+            {              
                 // TODO: Add insert logic here
                 Guid transactionId = Guid.NewGuid();
+
+                if (familyInfo.MarriageDate == DateTime.MinValue)
+                    familyInfo.MarriageDate = null;
                
                 familyInfo.PrimaryId = transactionId;
                 familyInfo?.DependentDetails?.ForEach(s=> s.PrimaryId=transactionId);
@@ -104,7 +107,7 @@ namespace MyNPO.Controllers
                 familInfo.LastName = collection.LastName;
                 familInfo.Address = collection.Address;
                 familInfo.City = collection.City;
-                familInfo.Dob = collection.Dob;
+                familInfo.DateOfBirth = collection.DateOfBirth;
                 familInfo.Email = collection.Email;
                 familInfo.MaritalStatus = collection.MaritalStatus;
                 familInfo.MarriageDate = collection.MarriageDate;
@@ -135,12 +138,12 @@ namespace MyNPO.Controllers
 
         // POST: Registration/Delete/5
         [HttpPost]
-        public ActionResult Delete(Guid primaryGuid, FormCollection collection)
+        public ActionResult Delete(Guid id, FormCollection collection)
         {
             try
             {
                 // TODO: Add delete logic here
-                var it = entityContext.familyInfos.FirstOrDefault(q => q.PrimaryId == primaryGuid);
+                var it = entityContext.familyInfos.FirstOrDefault(q => q.PrimaryId == id);
                 entityContext.familyInfos.Remove(it);
                 entityContext.SaveChanges();
 

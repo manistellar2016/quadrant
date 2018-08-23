@@ -2,7 +2,10 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Configuration;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
+using System.Data.Entity.Migrations;
 using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Linq;
 using System.Web;
@@ -11,18 +14,44 @@ namespace MyNPO.DataAccess
 {
     public class EntityContext : DbContext
     {
-        public EntityContext(string connectionString) : base(connectionString) { }
+        public static string connectionString = ConfigurationManager.AppSettings["DbConnectionString"];
+        public EntityContext(): base(connectionString)
+        {
+           
+
+        }
         public DbSet<LoginInfo> loginInfos { get; set; }
         public DbSet<FamilyInfo> familyInfos { get; set; }
         public DbSet<DependentInfo> dependentInfos { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            Database.SetInitializer<EntityContext>(new MigrateDatabaseToLatestVersion<EntityContext, MyConfiguration>());
+
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
-            Database.SetInitializer<EntityContext>(new DropCreateDatabaseIfModelChanges<EntityContext>());
-            //modelBuilder.Entity<LoginInfo>().Property(q => q.UserId).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity); // Both ([DatabaseGenerated(DatabaseGeneratedOption.Identity)]) is doing the same behaviour
+            modelBuilder.Conventions.Remove<ManyToManyCascadeDeleteConvention>();
+            modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
+
+            Configuration.ProxyCreationEnabled = false;
+            Configuration.LazyLoadingEnabled = false;           
+
+            base.OnModelCreating(modelBuilder);
+       
         }
 
 
     }
+
+    public class MyConfiguration : System.Data.Entity.Migrations.DbMigrationsConfiguration<EntityContext>
+    {       
+        public MyConfiguration()
+        {            
+            this.AutomaticMigrationsEnabled = true;
+            this.AutomaticMigrationDataLossAllowed = true;
+            ContextKey = "MyNPO.DataAccess.EntityContext";
+        }
+    }
+
+  
+
 }
