@@ -4,21 +4,28 @@
     ViewBag.Title = "Create";
 }
 
-<h2>Create</h2>
 
 
-@using (Html.BeginForm())
+
+
+@using (Html.BeginForm("Create", "Registration", FormMethod.Post, new { @id = "registerFormId", @class = "form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()
-
+    HtmlHelper.UnobtrusiveJavaScriptEnabled = false;
 <div class="form-horizontal">
-    <h4>FamilyInfo </h4>
+    <h3>Registration</h3>
     <hr />
+
+    <div class="text-danger">
+        @ViewBag.Error
+    </div>
+    <br />
+
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     <div class="form-group">
         @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter the FirstName" } })
             @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -26,23 +33,23 @@
     <div class="form-group">
         @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter the LastName" } })
             @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
         </div>
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.Dob, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.DateOfBirth, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.Dob, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Dob, "", new { @class = "text-danger" })
+            @Html.EditorFor(model => model.DateOfBirth, new { htmlAttributes = new { @class = "form-control", placeholder = "Ex: MM/DD/YYYY" } })
+            @Html.ValidationMessageFor(model => model.DateOfBirth, "", new { @class = "text-danger" })
         </div>
     </div>
 
     <div class="form-group">
         @Html.LabelFor(model => model.MobileNo, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.MobileNo, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.EditorFor(model => model.MobileNo, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter MobileNo" } })
             @Html.ValidationMessageFor(model => model.MobileNo, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -50,7 +57,7 @@
     <div class="form-group">
         @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", placeholder = "Ex: abc@gmail.com" } })
             @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -58,7 +65,7 @@
     <div class="form-group">
         @Html.LabelFor(model => model.City, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.City, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.EditorFor(model => model.City, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter City" } })
             @Html.ValidationMessageFor(model => model.City, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -66,7 +73,7 @@
     <div class="form-group">
         @Html.LabelFor(model => model.ZipCode, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.ZipCode, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.EditorFor(model => model.ZipCode, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Zip Code" } })
             @Html.ValidationMessageFor(model => model.ZipCode, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -74,7 +81,7 @@
     <div class="form-group">
         @Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Address" } })
             @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -82,7 +89,7 @@
     <div class="form-group">
         @Html.LabelFor(model => model.MaritalStatus, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.MaritalStatus, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.EditorFor(model => model.MaritalStatus, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Status" } })
             @Html.ValidationMessageFor(model => model.MaritalStatus, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -90,15 +97,22 @@
     <div class="form-group">
         @Html.LabelFor(model => model.MarriageDate, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.MarriageDate, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.EditorFor(model => model.MarriageDate, new { htmlAttributes = new { @class = "form-control", placeholder = "Ex: MM/DD/YYYY" } })
             @Html.ValidationMessageFor(model => model.MarriageDate, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.Label("Volunteer", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="Col-md-10">
+            @Html.CheckBoxFor(model => model.IsVolunteer, new { htmlAttributes = new { @class = "form-control" } })
         </div>
     </div>
 
     <div class="form-group">
         @Html.LabelFor(model => model.NoOfDependents, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.NoOfDependents, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.EditorFor(model => model.NoOfDependents, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter NoOfDependents" } })
             @Html.ValidationMessageFor(model => model.NoOfDependents, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -112,10 +126,6 @@
     <div id="dynamicGroup" class="form-group">
 
     </div>
-
-
-
-
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
             <input type="button" id="Complete" value="Complete" class="btn btn-default" />
@@ -132,61 +142,82 @@
     @Scripts.Render("~/bundles/jqueryval")
 
     <script>
+              
+
         $('#Next').click(function () {
-         
+
             var dependentCount = $('#NoOfDependents').val();
 
 
             var items = '';
             for (var i = 1; i <= dependentCount; i++) {
-               
+
                 items += '<div class="form-group">';
                 items += '<label class="control-label col-md-2"> Dependent Name' + i + '</label>';
 
                 items += '<div class="col-md-10">';
-                items += '<input type="text" id=DependentName' + i + ' class="form-control text-box single-line" type = "text" />';
+                items += '<input type="text" id=DependentName' + i + ' class="form-control text-box single-line" type = "text" placeholder = "Enter Dependent Name" />';
                 items += '</div>'
                 items += '</div>'
 
-                
+
                 items += '<div class="form-group">';
                 items += '<label class="control-label col-md-2"> Dependent DOB' + i + '</label>';
 
                 items += '<div class="col-md-10">';
-                items += '<input type="text" id=DependentDOB' + i + ' class="form-control text-box single-line" type = "text" />';
+                items += '<input type="text" id=DependentDOB' + i + ' class="form-control text-box single-line" type = "text" placeholder = "Ex: MM/DD/YYYY" />';
                 items += '</div>'
                 items += '</div>'
 
-                
+
                 items += '<div class="form-group">';
                 items += '<label class="control-label col-md-2">Dependent RelationShip' + i + '</label>';
 
                 items += '<div class="col-md-10">';
-                items += '<input type="text" id=DependentRelationShip' + i + ' class="form-control text-box single-line" type = "text" />';
+                items += '<input type="text" id=DependentRelationShip' + i + ' class="form-control text-box single-line" type = "text" placeholder = "Enter RelationShip"/>';
                 items += '</div>'
                 items += '</div>'
 
             }
             var url = "/Registration/Next";
-            $.get(url, null, function (data) {                
+            $.get(url, null, function (data) {
                 $('#dynamicGroup').html(items);
             });
         });
 
         $('#Complete').click(function () {
 
+            var validation = true;
+            if ($('#FirstName').val() == '') {               
+                $('#FirstName_validationMessage').text("FirstName is Required");
+                validation = false;
+            }
+
+            if ($('#LastName').val() == '') {
+                $('#LastName_validationMessage').text("LastName is Required");
+                validation = false;
+            }
+
+            if ($('#DateOfBirth').val() == '') {
+                $('#DateOfBirth_validationMessage').text('DateOfBirth is Required');
+                validation = false;
+            }
+
+            if (!validation)
+                return false;
+
             var dependent = '';
             var dependentCount = $('#NoOfDependents').val();
             var depentdent = [];
             for (var i = 1; i <= dependentCount; i++) {
-                depentdent.push({ Name: $('#DependentName' + i).val(), DOB: $('#DependentDOB' + i).val(), RelationShip: $('#DependentRelationShip' + i).val()});
+                depentdent.push({ Name: $('#DependentName' + i).val(), DOB: $('#DependentDOB' + i).val(), RelationShip: $('#DependentRelationShip' + i).val() });
             }
 
             var model = {
 
-                FirstName: $('#FirstName').val(),        
+                FirstName: $('#FirstName').val(),
                 LastName: $('#LastName').val(),
-                Dob: $('#Dob').val(),
+                DateOfBirth: $('#DateOfBirth').val(),
                 MobileNo: $('#MobileNo').val(),
                 Email: $('#Email').val(),
                 City: $('#City').val(),
@@ -195,6 +226,7 @@
                 MaritalStatus: $('#MaritalStatus').val(),
                 MarriageDate: $('#MarriageDate').val(),
                 NoOfDependents: $('#NoOfDependents').val(),
+                IsVolunteer: $('#IsVolunteer').prop('checked'),
                 DependentDetails: depentdent //[{ Name: $('#DependentName1').val(), DOB: $('#DependentDOB1').val() }] //[{ Name: 'Senba' }, { Name: 'Sindhu' }]
             };
 
@@ -206,7 +238,7 @@
                 url: url,
                 contentType: "application/json"
             }).done(function (res) {
-                //$("#SomeDivToShowTheResult").html(res);
+                location.href = "/Registration/Index";
             });
         });
     </script>

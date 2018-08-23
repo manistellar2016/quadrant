@@ -47,8 +47,9 @@ namespace MyNPO.Controllers
         }
         // POST: Registration/Create
         [HttpPost]
-        public ActionResult Create(FamilyInfo familyInfo)
+        public JsonResult Create(FamilyInfo familyInfo)
         {
+            string status = "";
             try
             {              
                 // TODO: Add insert logic here
@@ -57,11 +58,11 @@ namespace MyNPO.Controllers
                 if (familyInfo.MarriageDate == DateTime.MinValue)
                     familyInfo.MarriageDate = null;
 
-                var famInfo = entityContext.familyInfos.FirstOrDefault(q => q.FirstName == familyInfo.FirstName && q.LastName == familyInfo.LastName && q.DateOfBirth.ToString("dd-MM-yyyy") == familyInfo.DateOfBirth.ToString("dd-MM-yyyy"));
+                var famInfo = entityContext.familyInfos.FirstOrDefault(q => q.FirstName == familyInfo.FirstName && q.LastName == familyInfo.LastName && q.DateOfBirth == familyInfo.DateOfBirth);
                 if (famInfo != null && !string.IsNullOrEmpty(famInfo.FirstName))
                 {
-                    ViewBag.Error = $"Already {familyInfo.FirstName} is there";
-                    return View();
+                    //ViewBag.Error = $"Already {familyInfo.FirstName} is there";
+                    status = $"Already {familyInfo.FirstName} is there";
                 }
                 else
                 {
@@ -71,14 +72,15 @@ namespace MyNPO.Controllers
 
                     entityContext.familyInfos.Add(familyInfo);
                     entityContext.SaveChanges();
-
-                    return RedirectToAction("Index");
+                    status = "Saved";
                 }
+               
             }
             catch(Exception ex)
             {
-                return View();
+                status = "Sorry Try Again";
             }
+            return Json(status, JsonRequestBehavior.AllowGet);
         }
 
         // GET: Registration/Edit/5

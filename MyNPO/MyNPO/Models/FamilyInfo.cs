@@ -15,7 +15,7 @@ namespace MyNPO.Models
         public string FirstName { get; set; }      
         
         public string LastName { get; set; }
-        [DisplayFormat(ApplyFormatInEditMode=true ,DataFormatString = "{0:MM-dd-yyyy}")]
+        [DisplayFormat(ApplyFormatInEditMode=true ,DataFormatString = "{0:MM/dd/yyyy}")]
 
         public DateTime DateOfBirth { get; set; }
         public string MobileNo { get; set; }
@@ -24,7 +24,7 @@ namespace MyNPO.Models
         public string ZipCode { get; set; }
         public string Address { get; set; }
         public string MaritalStatus { get; set; }
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM-dd-yyyy}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
         public DateTime? MarriageDate { get; set; }
         public int NoOfDependents { get; set; }
         public bool IsVolunteer { get; set; }

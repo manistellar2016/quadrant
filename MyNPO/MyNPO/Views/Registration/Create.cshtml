@@ -16,8 +16,8 @@
     <h3>Registration</h3>
     <hr />
 
-    <div class="text-danger">
-        @ViewBag.Error
+    <div class="text-danger" id="errorMsg">
+       
     </div>
     <br />
 
@@ -238,7 +238,14 @@
                 url: url,
                 contentType: "application/json"
             }).done(function (res) {
-                location.href = "/Registration/Index";
+               
+                if (res == 'Saved') {
+                    location.href = "/Registration/Index";
+                }
+                else {
+                    alert('HI');
+                    $("#errorMsg").text(res);
+                }
             });
         });
     </script>
