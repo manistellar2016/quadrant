@@ -16,7 +16,8 @@ namespace MyNPO.Controllers
         EntityContext entityContext = new EntityContext();
         // GET: Registration
         public ActionResult Index()
-        {
+        {           
+
             var it=entityContext.familyInfos.ToList();
             it.ForEach(q => q.DependentDetails = entityContext.dependentInfos.Where(t => t.PrimaryId == q.PrimaryId).ToList());            
             return View(it);
@@ -33,7 +34,7 @@ namespace MyNPO.Controllers
 
         // GET: Registration/Create
         public ActionResult Create()
-        {
+        {           
             //ViewBag.VolunteerInfo = "PrimaryInfo";
             return View();
         }
@@ -55,14 +56,24 @@ namespace MyNPO.Controllers
 
                 if (familyInfo.MarriageDate == DateTime.MinValue)
                     familyInfo.MarriageDate = null;
-               
-                familyInfo.PrimaryId = transactionId;
-                familyInfo?.DependentDetails?.ForEach(s=> s.PrimaryId=transactionId);
 
-                entityContext.familyInfos.Add(familyInfo);
-                entityContext.SaveChanges();
+                var famInfo = entityContext.familyInfos.FirstOrDefault(q => q.FirstName == familyInfo.FirstName && q.LastName == familyInfo.LastName && q.DateOfBirth.ToString("dd-MM-yyyy") == familyInfo.DateOfBirth.ToString("dd-MM-yyyy"));
+                if (famInfo != null && !string.IsNullOrEmpty(famInfo.FirstName))
+                {
+                    ViewBag.Error = $"Already {familyInfo.FirstName} is there";
+                    return View();
+                }
+                else
+                {
 
-                return RedirectToAction("Index");
+                    familyInfo.PrimaryId = transactionId;
+                    familyInfo?.DependentDetails?.ForEach(s => s.PrimaryId = transactionId);
+
+                    entityContext.familyInfos.Add(familyInfo);
+                    entityContext.SaveChanges();
+
+                    return RedirectToAction("Index");
+                }
             }
             catch(Exception ex)
             {
@@ -114,6 +125,7 @@ namespace MyNPO.Controllers
                 familInfo.MobileNo = collection.MobileNo;
                 familInfo.NoOfDependents = collection.NoOfDependents;
                 familInfo.ZipCode = collection.ZipCode;
+                familInfo.IsVolunteer = collection.IsVolunteer;
 
                 entityContext.Entry(familInfo).State = System.Data.Entity.EntityState.Modified;               
                 entityContext.familyInfos.AddOrUpdate(familInfo);
@@ -144,12 +156,14 @@ namespace MyNPO.Controllers
             {
                 // TODO: Add delete logic here
                 var it = entityContext.familyInfos.FirstOrDefault(q => q.PrimaryId == id);
-                entityContext.familyInfos.Remove(it);
+                it.DependentDetails = entityContext.dependentInfos.Where(q => q.PrimaryId == it.PrimaryId).ToList();
+                entityContext.dependentInfos.RemoveRange(it.DependentDetails);
+                entityContext.familyInfos.Remove(it);               
                 entityContext.SaveChanges();
 
                 return RedirectToAction("Index");
             }
-            catch
+            catch(Exception ex)
             {
                 return View();
             }
