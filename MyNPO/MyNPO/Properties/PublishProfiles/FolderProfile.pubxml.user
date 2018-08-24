@@ -58,10 +58,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/08/2018 17:51:57</publishTime>
     </File>
     <File Include="bin/MyNPO.dll">
-      <publishTime>08/23/2018 12:26:15</publishTime>
+      <publishTime>08/23/2018 12:58:19</publishTime>
     </File>
     <File Include="bin/MyNPO.pdb">
-      <publishTime>08/23/2018 12:26:15</publishTime>
+      <publishTime>08/23/2018 12:58:19</publishTime>
     </File>
     <File Include="bin/Newtonsoft.Json.dll">
       <publishTime>08/08/2018 17:51:58</publishTime>
@@ -367,7 +367,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/18/2018 08:45:05</publishTime>
     </File>
     <File Include="Views/Registration/Create.cshtml">
-      <publishTime>08/23/2018 11:23:03</publishTime>
+      <publishTime>08/23/2018 12:50:24</publishTime>
     </File>
     <File Include="Views/Registration/Delete.cshtml">
       <publishTime>08/22/2018 20:02:00</publishTime>
