@@ -101,3 +101,6 @@ C:\QuadrantNP\MyNPO\MyNPO\obj\Release\MyNPO.csproj.CopyComplete
 C:\QuadrantNP\MyNPO\MyNPO\obj\Release\MyNPO.dll
 C:\QuadrantNP\MyNPO\MyNPO\obj\Release\MyNPO.pdb
 C:\QuadrantNP\MyNPO\MyNPO\obj\Release\MyNPO.csprojAssemblyReference.cache
+C:\QuadrantNP\MyNPO\MyNPO\bin\LumenWorks.Framework.IO.dll
+C:\QuadrantNP\MyNPO\MyNPO\bin\LumenWorks.Framework.IO.pdb
+C:\QuadrantNP\MyNPO\MyNPO\bin\LumenWorks.Framework.IO.xml

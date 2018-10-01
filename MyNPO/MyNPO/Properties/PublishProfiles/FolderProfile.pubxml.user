@@ -27,6 +27,12 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="bin/EntityFramework.SqlServer.dll">
       <publishTime>10/23/2017 13:15:20</publishTime>
     </File>
+    <File Include="bin/LumenWorks.Framework.IO.dll">
+      <publishTime>03/24/2018 15:18:16</publishTime>
+    </File>
+    <File Include="bin/LumenWorks.Framework.IO.pdb">
+      <publishTime>03/24/2018 15:18:16</publishTime>
+    </File>
     <File Include="bin/Microsoft.AI.Agent.Intercept.dll">
       <publishTime>08/08/2018 17:51:57</publishTime>
     </File>
@@ -58,10 +64,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/08/2018 17:51:57</publishTime>
     </File>
     <File Include="bin/MyNPO.dll">
-      <publishTime>08/23/2018 12:58:19</publishTime>
+      <publishTime>09/28/2018 16:44:23</publishTime>
     </File>
     <File Include="bin/MyNPO.pdb">
-      <publishTime>08/23/2018 12:58:19</publishTime>
+      <publishTime>09/28/2018 16:44:23</publishTime>
     </File>
     <File Include="bin/Newtonsoft.Json.dll">
       <publishTime>08/08/2018 17:51:58</publishTime>
@@ -366,8 +372,14 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Views/Home/Index.cshtml">
       <publishTime>08/18/2018 08:45:05</publishTime>
     </File>
+    <File Include="Views/Home/PostPage.cshtml">
+      <publishTime>09/28/2018 16:43:51</publishTime>
+    </File>
+    <File Include="Views/Home/Upload.cshtml">
+      <publishTime>09/27/2018 16:05:37</publishTime>
+    </File>
     <File Include="Views/Registration/Create.cshtml">
-      <publishTime>08/23/2018 12:50:24</publishTime>
+      <publishTime>08/23/2018 17:35:09</publishTime>
     </File>
     <File Include="Views/Registration/Delete.cshtml">
       <publishTime>08/22/2018 20:02:00</publishTime>
@@ -394,7 +406,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/08/2018 17:51:57</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>08/20/2018 14:24:18</publishTime>
+      <publishTime>09/28/2018 13:31:49</publishTime>
     </File>
   </ItemGroup>
 </Project>

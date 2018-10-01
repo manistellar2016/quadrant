@@ -12,7 +12,7 @@ namespace MyNPO.Controllers
 {
     public class RegistrationController : Controller
     {
-        static string connectionString = ConfigurationManager.AppSettings["DbConnectionString"];
+       // static string connectionString = ConfigurationManager.AppSettings["DbConnectionString"];
         EntityContext entityContext = new EntityContext();
         // GET: Registration
         public ActionResult Index()

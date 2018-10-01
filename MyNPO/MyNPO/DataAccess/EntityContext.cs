@@ -23,6 +23,7 @@ namespace MyNPO.DataAccess
         public DbSet<LoginInfo> loginInfos { get; set; }
         public DbSet<FamilyInfo> familyInfos { get; set; }
         public DbSet<DependentInfo> dependentInfos { get; set; }
+        public DbSet<Report> reportInfo { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
