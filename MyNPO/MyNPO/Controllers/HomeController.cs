@@ -61,6 +61,23 @@ namespace MyNPO.Controllers
             return View();
         }
 
+        public ActionResult Report()
+        {
+            var report = new List<SelectListItem>();
+            report.Add(new SelectListItem() { Text = "-Select-", Value = "0" });
+            report.Add(new SelectListItem() { Text = "USER-REPORT", Value = "1" });
+            report.Add(new SelectListItem() { Text = "EBAY-REPORT", Value = "2" });
+            report.Add(new SelectListItem() { Text = "KINDBASE-REPORT", Value = "3" });
+            ViewBag.Reports = report;
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Report(ReportUserInfo reportUserInfo)
+        {
+            return View();
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Upload(HttpPostedFileBase upload, FormCollection test)
@@ -152,7 +169,8 @@ namespace MyNPO.Controllers
             var lReport = new List<Report>();
             foreach (DataRow dataRow in csvTable.Rows)
             {
-                if (entityContext.reportInfo.Any(q => q.TransactionID == dataRow[9].ToString()))
+                var tid = dataRow[9].ToString();
+                if (entityContext.reportInfo.Any(q => q.TransactionID == tid))
                      continue;               
                     
 
