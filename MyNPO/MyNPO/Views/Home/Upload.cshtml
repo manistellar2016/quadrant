@@ -1,4 +1,4 @@
-﻿@model System.Data.DataTable
+﻿@*@model System.Data.DataTable*@
 @using System.Data;
 
 @{
@@ -13,6 +13,14 @@
     @Html.ValidationSummary()
 
     <div class="form-group">
+        <select class="form-control" id="selectReport" name="selectReport">
+            <option value="0" selected>-Select-</option>
+            <option value="1">EBAY</option>
+            <option value="2">KINDBASE</option>
+        </select>
+    </div>
+
+    <div class="form-group">
         <input type="file" id="dataFile" name="upload" />
     </div>
 
@@ -20,7 +28,11 @@
         <input type="submit" value="Upload" class="btn btn-default" />
     </div>
 
-    if (Model != null)
+    <div class="form-group">
+        @ViewBag.ReportStatus
+    </div>
+
+    @*if (Model != null)
     {
         <table>
             <thead>
@@ -43,5 +55,5 @@
                 }
             </tbody>
         </table>
-    }
+    }*@
 }

@@ -30,7 +30,9 @@ namespace MyNPO.Models
        public string SalesTax { get; set; }
        public string InvoiceID { get; set; }
        public string ReferenceTxnID { get; set; }
-        public DateTime UploadDateTime { get; set; }
+       public DateTime UploadDateTime { get; set; }
+       public string PhoneNo { get; set; }
+       public string Reason { get; set; }
 
     }
 }

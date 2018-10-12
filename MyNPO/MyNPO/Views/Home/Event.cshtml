@@ -14,43 +14,43 @@ Welcome to our New Facebook App <span id='fbinfo'><fb:name uid='loggedinuser' us
     var fbuserid, fbtoken;
     var appid = "289439064991899";
     var loggedin = false;
-    $(document).ready(function () {
+    $(document).ready(function() {
         loginFB();
         createMyEvent();
     });
 
-    FB.init({ appId: appid, status: true, cookie: true, xfbml: true });
-    FB.Event.subscribe('auth.sessionChange', function (response) {
-        if (response.session) {
-            var session = FB.getSession();
-            fbtoken = session.access_token;
-            fbuserid = session.uid;
-        }
-    });
-
-    FB.getLoginStatus(function (response) {
-        if (response.session) {
-            var session = FB.getSession();
-            fbtoken = session.access_token;
-            fbuserid = session.uid;
-        }
-        else {
-            loginFB();
-        }
-    });
-
-    function loginFB() {
-        FB.login(function (response) {
+    FB.init({appId: appid, status: true, cookie: true, xfbml: true});
+    FB.Event.subscribe('auth.sessionChange', function(response) {
             if (response.session) {
                 var session = FB.getSession();
                 fbtoken = session.access_token;
                 fbuserid = session.uid;
             }
-        }, { perms: 'create_event' });
+    });
+
+    FB.getLoginStatus(function(response) {
+        if (response.session) {
+            var session = FB.getSession();
+            fbtoken = session.access_token;
+            fbuserid = session.uid;
+        }
+        else{
+            loginFB();
+        }
+    });
+
+    function loginFB() {
+        FB.login(function(response) {
+            if (response.session) {
+                var session = FB.getSession();
+                fbtoken = session.access_token;
+                fbuserid = session.uid;
+            }
+        }, {perms:'create_event'});
     }
 
     function logoutFB() {
-        FB.logout(function (response) {
+        FB.logout(function(response) {
             // user is now logged out
         });
     }
