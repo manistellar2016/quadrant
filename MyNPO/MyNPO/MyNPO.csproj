@@ -172,6 +172,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\DonationController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\RegistrationController.cs" />
     <Compile Include="DataAccess\EntityContext.cs" />
     <Compile Include="Global.asax.cs">
@@ -245,6 +246,7 @@
     <Content Include="Views\Home\PostPage.cshtml" />
     <Content Include="Views\Home\Event.cshtml" />
     <Content Include="Views\Donation\Create.cshtml" />
+    <Content Include="Views\Login\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

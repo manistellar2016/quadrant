@@ -17,4 +17,13 @@ namespace MyNPO.Models
         [Required]
         public string Reason { get; set; }
     }
+
+
+    public class Login
+    {
+        [Required]
+        public string UserName { get; set; }
+        [Required]
+        public string Password { get; set; }
+    }
 }
