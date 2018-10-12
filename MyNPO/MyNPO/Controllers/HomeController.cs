@@ -15,99 +15,11 @@ using System.Web;
 using System.Web.Mvc;
 
 namespace MyNPO.Controllers
-{
-    public class derivedClass : HttpPostedFileBase
-    {
-        public string Type { get; set; }
-
-        Stream stream;
-        string contentType;
-        string fileName;
-
-        public derivedClass(Stream stream, string contentType, string fileName)
-        {
-            this.stream = stream;
-            this.contentType = contentType;
-            this.fileName = fileName;
-        }
-
-        public override int ContentLength
-        {
-            get { return (int)stream.Length; }
-        }
-
-        public override string ContentType
-        {
-            get { return contentType; }
-        }
-
-        public override string FileName
-        {
-            get { return fileName; }
-        }
-
-        public override Stream InputStream
-        {
-            get { return stream; }
-        }
-
-        public override void SaveAs(string filename)
-        {
-            using (var file = File.Open(filename, FileMode.CreateNew))
-                stream.CopyTo(file);
-        }
-    }
-
-
+{  
     public class HomeController : Controller
     {
         public ActionResult Index()
-        {
-
-
-
-            //HttpClient httpClient = new HttpClient();
-            //httpClient.DefaultRequestHeaders.Add("user", "saibabaseattle@hotmail.com");
-            //httpClient.DefaultRequestHeaders.Add("vendor", "saibabaseattle@hotmail.com");
-            //httpClient.DefaultRequestHeaders.Add("password", "saibaba*99");
-            //httpClient.DefaultRequestHeaders.Add("partner", "PayPal");
-            //httpClient.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/xml"));
-
-            //string uri = "https://payments-reports.paypal.com/test-reportingengine/runReportRequest?reportName=DailyActivityReport&report_date=2018-08-19"; //<html><body><p>No content-type</p><p>Payflow-Build-ID : <i>release-48625933-prim_5wlapp6</i></p></body></html>
-
-            //var result = httpClient.GetAsync(uri).Result.Content.ReadAsStringAsync().Result;
-
-            //var result = response.Content.ReadAsStringAsync().Result;
-
-
-            //var report = new ReportingEngineRequest();
-            //report.AuthRequest = new AuthRequest();
-            //report.AuthRequest.User = "saibabaseattle@hotmail.com";
-            //report.AuthRequest.Password = "saibaba*99";
-            //report.AuthRequest.Partner = "PayPal";
-            //report.AuthRequest.Vendor = "saibabaseattle@hotmail.com";
-            //report.RunReportRequest = new RunReportRequest();
-            //report.RunReportRequest.ReportName = "DailyActivityReport";
-            //report.RunReportRequest.ReportParam = new ReportParam();
-            //report.RunReportRequest.ReportParam.ParamValue = "2018-08-19";
-            //report.RunReportRequest.ReportParam.ParamName = "report_date";
-            //report.RunReportRequest.PageSize = "50";
-
-
-            //var client = new HttpClient();
-            //client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            //HttpResponseMessage response = client.PostAsync<ReportingEngineRequest>("https://payments-reports.paypal.com/test-reportingengine/runReportRequest",
-            //                                        report, new XmlMediaTypeFormatter()).Result;
-
-            //response.EnsureSuccessStatusCode();
-            //var msg = response.Content.ReadAsAsync<ReportingEngineResponse>().Result;
-            //var msg = response.Content.ReadAsAsync<ReportingEngineResponse>().Result;
-            //Stream receiveStream = response.Content.ReadAsStreamAsync().Result;
-            //StreamReader readStream = new StreamReader(receiveStream, Encoding.UTF8);
-            //var msg = readStream.ReadToEnd();
-
-
-            //var connectionString = ConfigurationManager.AppSettings["DbConnectionString"];            
+        {          
             return View();
         }
 
