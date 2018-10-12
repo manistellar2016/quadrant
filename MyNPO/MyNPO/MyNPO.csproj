@@ -179,6 +179,7 @@
     <Compile Include="Models\DependentInfo.cs" />
     <Compile Include="Models\FamilyInfo.cs" />
     <Compile Include="Models\LoginInfo.cs" />
+    <Compile Include="Models\MailSender.cs" />
     <Compile Include="Models\Report.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -187,6 +188,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Documents\Requirements.txt" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -202,6 +204,8 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Documents\MSR-201808.CSV" />
+    <Content Include="Documents\Orders Report.csv" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
@@ -237,6 +241,7 @@
     <Content Include="Views\Home\Donation.cshtml" />
     <Content Include="Views\Home\Upload.cshtml" />
     <Content Include="Views\Home\PostPage.cshtml" />
+    <Content Include="Views\Home\Event.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -272,7 +277,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>31726</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>https://localhost:31726/</IISUrl>
+          <IISUrl>http://localhost:31727/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

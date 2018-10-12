@@ -16,6 +16,49 @@ using System.Web.Mvc;
 
 namespace MyNPO.Controllers
 {
+    public class derivedClass : HttpPostedFileBase
+    {
+        public string Type { get; set; }
+
+        Stream stream;
+        string contentType;
+        string fileName;
+
+        public derivedClass(Stream stream, string contentType, string fileName)
+        {
+            this.stream = stream;
+            this.contentType = contentType;
+            this.fileName = fileName;
+        }
+
+        public override int ContentLength
+        {
+            get { return (int)stream.Length; }
+        }
+
+        public override string ContentType
+        {
+            get { return contentType; }
+        }
+
+        public override string FileName
+        {
+            get { return fileName; }
+        }
+
+        public override Stream InputStream
+        {
+            get { return stream; }
+        }
+
+        public override void SaveAs(string filename)
+        {
+            using (var file = File.Open(filename, FileMode.CreateNew))
+                stream.CopyTo(file);
+        }
+    }
+
+
     public class HomeController : Controller
     {
         public ActionResult Index()
@@ -88,6 +131,11 @@ namespace MyNPO.Controllers
             return View();
         }
 
+        public ActionResult Event()
+        {
+            return View();
+        }
+
         public ActionResult PostPage()
         {
             return View();
@@ -95,16 +143,23 @@ namespace MyNPO.Controllers
 
         public ActionResult Upload()
         {
+            //Mail Send Test Code
+            //new MailSender().SendMailWithInvite();
+
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Upload(HttpPostedFileBase upload)
+        public ActionResult Upload(HttpPostedFileBase upload, FormCollection test)
         {
-            //Date	Time	Time Zone	Description	Currency	Gross	Fee	Net	Balance	Transaction ID	From Email Address	Name	Bank Name	Bank Account	Shipping and Handling Amount	Sales Tax	Invoice ID	Reference Txn ID
-            EntityContext entityContext = new EntityContext();
+           // Date Time    Time Zone   Description Currency    Gross Fee Net Balance Transaction ID  From Email Address Name    Bank Name   Bank Account    Shipping and Handling Amount    Sales Tax   Invoice ID  Reference Txn ID
+           
             var lReport = new List<Report>();
+            int fileUploadType =Convert.ToInt16(test["selectReport"]);
+            if (fileUploadType == 0)
+                return View();
+
             if (ModelState.IsValid)
             {
                 if (upload != null && upload.ContentLength > 0)
@@ -115,36 +170,22 @@ namespace MyNPO.Controllers
                         DataTable csvTable = new DataTable();
                         using (CsvReader csvReader =
                             new CsvReader(new StreamReader(stream), true))
-                        {                            
+                        {
                             csvTable.Load(csvReader);
                         }
-
-                        foreach(DataRow dataRow in csvTable.Rows)
+                        if (fileUploadType == 1)
                         {
-                            var report = new Report();
-                            report.Date = dataRow[0].ToString();
-                            report.Time = dataRow[1].ToString(); 
-                            report.TimeZone = dataRow[2].ToString();
-                            report.Description = dataRow[3].ToString();
-                            report.CurrencyType = dataRow[4].ToString();
-                            report.Gross = dataRow[5].ToString();
-                            report.Fee = dataRow[6].ToString();
-                            report.Net = dataRow[7].ToString();
-                            report.TransactionID = dataRow[9].ToString();
-                            report.FromEmailAddress = dataRow[10].ToString();
-                            report.Name = dataRow[11].ToString();
-                            report.BankName = dataRow[12].ToString();
-                            report.BankAccount = dataRow[13].ToString();
-                            report.ShippingAmount = dataRow[14].ToString();
-                            report.SalesTax = dataRow[15].ToString();
-                            report.InvoiceID = dataRow[16].ToString();
-                            report.ReferenceTxnID = dataRow[17].ToString();
-                            report.TransactionGuid = Guid.NewGuid();
-                            report.UploadDateTime = DateTime.Now;
-                            lReport.Add(report);
+                            lReport = ConvertCsvTableToEbayReport(csvTable);
                         }
-                        entityContext.reportInfo.AddRange(lReport);
-                        entityContext.SaveChanges();
+                        else
+                        {
+                            lReport = ConvertCsvTableToKindBaseReport(csvTable);
+                        }
+                        using (EntityContext entityContext = new EntityContext())
+                        {
+                            entityContext.reportInfo.AddRange(lReport);
+                            entityContext.SaveChanges();
+                        }
                         return View(csvTable);
                     }
                     else
@@ -159,6 +200,69 @@ namespace MyNPO.Controllers
                 }
             }
             return View();
+        }
+
+        private List<Report> ConvertCsvTableToKindBaseReport(DataTable csvTable)
+        {
+            EntityContext entityContext = new EntityContext();
+
+            var lReport = new List<Report>();
+            foreach (DataRow dataRow in csvTable.Rows)
+            {
+                if (entityContext.reportInfo.Any(q => q.TransactionID == dataRow[4].ToString()))
+                    continue;
+
+                DateTime dt = Convert.ToDateTime(dataRow[1].ToString());
+
+                var report = new Report();
+                report.FromEmailAddress = dataRow[0].ToString();
+                report.PhoneNo = dataRow[3].ToString();
+                report.TransactionID = dataRow[4].ToString();
+                report.Net = dataRow[10].ToString();
+                report.Name = dataRow[11].ToString();
+                report.Description = "KindBase";
+                report.Date = dt.ToString("MM/dd/yyyy");    
+                report.Time = dt.ToString("HH:mm:ss");
+                report.TransactionGuid = Guid.NewGuid();
+                report.UploadDateTime = DateTime.Now;               
+                lReport.Add(report);
+            }
+            return lReport;
+        }
+        private List<Report> ConvertCsvTableToEbayReport(DataTable csvTable)
+        {
+            EntityContext entityContext = new EntityContext();
+
+            var lReport = new List<Report>();
+            foreach (DataRow dataRow in csvTable.Rows)
+            {
+                if (entityContext.reportInfo.Any(q => q.TransactionID == dataRow[9].ToString()))
+                     continue;               
+                    
+
+                var report = new Report();
+                report.Date = dataRow[0].ToString();
+                report.Time = dataRow[1].ToString();
+                report.TimeZone = dataRow[2].ToString();
+                report.Description = dataRow[3].ToString();
+                report.CurrencyType = dataRow[4].ToString();
+                report.Gross = dataRow[5].ToString();
+                report.Fee = dataRow[6].ToString();
+                report.Net = dataRow[7].ToString();
+                report.TransactionID = dataRow[9].ToString();
+                report.FromEmailAddress = dataRow[10].ToString();
+                report.Name = dataRow[11].ToString();
+                report.BankName = dataRow[12].ToString();
+                report.BankAccount = dataRow[13].ToString();
+                report.ShippingAmount = dataRow[14].ToString();
+                report.SalesTax = dataRow[15].ToString();
+                report.InvoiceID = dataRow[16].ToString();
+                report.ReferenceTxnID = dataRow[17].ToString();
+                report.TransactionGuid = Guid.NewGuid();
+                report.UploadDateTime = DateTime.Now;
+                lReport.Add(report);
+            }
+            return lReport;
         }
     }
 }

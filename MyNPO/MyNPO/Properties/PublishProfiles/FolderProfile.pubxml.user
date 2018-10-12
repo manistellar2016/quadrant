@@ -64,10 +64,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/08/2018 17:51:57</publishTime>
     </File>
     <File Include="bin/MyNPO.dll">
-      <publishTime>09/28/2018 16:44:23</publishTime>
+      <publishTime>10/04/2018 11:48:47</publishTime>
     </File>
     <File Include="bin/MyNPO.pdb">
-      <publishTime>09/28/2018 16:44:23</publishTime>
+      <publishTime>10/04/2018 11:48:47</publishTime>
     </File>
     <File Include="bin/Newtonsoft.Json.dll">
       <publishTime>08/08/2018 17:51:58</publishTime>
@@ -369,11 +369,14 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Views/Home/Donation.cshtml">
       <publishTime>08/23/2018 11:11:21</publishTime>
     </File>
+    <File Include="Views/Home/Event.cshtml">
+      <publishTime>10/02/2018 18:30:02</publishTime>
+    </File>
     <File Include="Views/Home/Index.cshtml">
       <publishTime>08/18/2018 08:45:05</publishTime>
     </File>
     <File Include="Views/Home/PostPage.cshtml">
-      <publishTime>09/28/2018 16:43:51</publishTime>
+      <publishTime>10/04/2018 11:48:25</publishTime>
     </File>
     <File Include="Views/Home/Upload.cshtml">
       <publishTime>09/27/2018 16:05:37</publishTime>
