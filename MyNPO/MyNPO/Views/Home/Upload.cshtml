@@ -1,4 +1,4 @@
-﻿@model System.Data.DataTable
+﻿@*@model System.Data.DataTable*@
 @using System.Data;
 
 @{
@@ -28,7 +28,11 @@
         <input type="submit" value="Upload" class="btn btn-default" />
     </div>
 
-    if (Model != null)
+    <div class="form-group">
+        @ViewBag.ReportStatus
+    </div>
+
+    @*if (Model != null)
     {
         <table>
             <thead>
@@ -51,5 +55,5 @@
                 }
             </tbody>
         </table>
-    }
+    }*@
 }

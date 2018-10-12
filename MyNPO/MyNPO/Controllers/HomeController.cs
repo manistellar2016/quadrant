@@ -153,8 +153,9 @@ namespace MyNPO.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Upload(HttpPostedFileBase upload, FormCollection test)
         {
-           // Date Time    Time Zone   Description Currency    Gross Fee Net Balance Transaction ID  From Email Address Name    Bank Name   Bank Account    Shipping and Handling Amount    Sales Tax   Invoice ID  Reference Txn ID
-           
+            // Date Time    Time Zone   Description Currency    Gross Fee Net Balance Transaction ID  From Email Address Name    Bank Name   Bank Account    Shipping and Handling Amount    Sales Tax   Invoice ID  Reference Txn ID
+
+            string report = string.Empty;
             var lReport = new List<Report>();
             int fileUploadType =Convert.ToInt16(test["selectReport"]);
             if (fileUploadType == 0)
@@ -186,7 +187,8 @@ namespace MyNPO.Controllers
                             entityContext.reportInfo.AddRange(lReport);
                             entityContext.SaveChanges();
                         }
-                        return View(csvTable);
+                        report = $"ReportStatus -- TotalCount:{csvTable.Rows.Count}; UploadedCount:{lReport.Count}; ExistingCount:{csvTable.Rows.Count - lReport.Count}";
+                        //return View(csvTable);
                     }
                     else
                     {
@@ -199,6 +201,7 @@ namespace MyNPO.Controllers
                     ModelState.AddModelError("File", "Please Upload Your file");
                 }
             }
+            ViewBag.ReportStatus = report;
             return View();
         }
 
@@ -209,7 +212,8 @@ namespace MyNPO.Controllers
             var lReport = new List<Report>();
             foreach (DataRow dataRow in csvTable.Rows)
             {
-                if (entityContext.reportInfo.Any(q => q.TransactionID == dataRow[4].ToString()))
+                var tid = dataRow[4].ToString();
+                if (entityContext.reportInfo.Any(q => q.TransactionID == tid))
                     continue;
 
                 DateTime dt = Convert.ToDateTime(dataRow[1].ToString());

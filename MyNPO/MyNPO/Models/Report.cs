@@ -32,6 +32,7 @@ namespace MyNPO.Models
        public string ReferenceTxnID { get; set; }
        public DateTime UploadDateTime { get; set; }
        public string PhoneNo { get; set; }
+       public string Reason { get; set; }
 
     }
 }
