@@ -170,6 +170,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\DonationController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\RegistrationController.cs" />
     <Compile Include="DataAccess\EntityContext.cs" />
@@ -177,6 +178,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\DependentInfo.cs" />
+    <Compile Include="Models\Donation.cs" />
     <Compile Include="Models\FamilyInfo.cs" />
     <Compile Include="Models\LoginInfo.cs" />
     <Compile Include="Models\MailSender.cs" />
@@ -242,6 +244,7 @@
     <Content Include="Views\Home\Upload.cshtml" />
     <Content Include="Views\Home\PostPage.cshtml" />
     <Content Include="Views\Home\Event.cshtml" />
+    <Content Include="Views\Donation\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
