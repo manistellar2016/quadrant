@@ -24,6 +24,18 @@ namespace MyNPO.Models
         [Required]
         public string UserName { get; set; }
         [Required]
+        [DataType(DataType.Password)]
         public string Password { get; set; }
+    }
+
+    public class ReportUserInfo
+    {
+        [Required]
+        public string FromDate { get; set; }
+        [Required]    
+        public string ToDate { get; set; }
+        [Required]
+        public int TypeOfReport { get; set; }
+        public List<Report> ReportInfo { get; set; }
     }
 }

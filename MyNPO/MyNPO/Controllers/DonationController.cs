@@ -35,13 +35,14 @@ namespace MyNPO.Controllers
                         FromEmailAddress = donation.Email,
                         Net = donation.DonationAmount,
                         PhoneNo = donation.Phone,
-                        Date = dt.ToString("MM/dd/yyyy"),
-                        Time = dt.ToString("HH:mm:ss"),
-                        Description = $"SystemDonation UserName", // Plan to LoginUser
+                        Date = dt,
+                        Time = dt.ToString(Constants.HourFormat),
+                        Description = $"SystemDonation", // Plan to LoginUser
                         Reason = donation.Reason,
                         TransactionGuid = guid,
                         ReferenceTxnID = guid.ToString().Replace("-", ""),
-                        UploadDateTime = dt
+                        UploadDateTime = dt,
+                        TypeOfReport = Constants.SystemDonation
 
                     };
                     entityContext.reportInfo.Add(report);

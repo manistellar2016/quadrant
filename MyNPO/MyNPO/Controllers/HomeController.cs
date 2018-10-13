@@ -61,21 +61,42 @@ namespace MyNPO.Controllers
             return View();
         }
 
-        public ActionResult Report()
+        private List<SelectListItem> GetTypeOfReport()
         {
             var report = new List<SelectListItem>();
             report.Add(new SelectListItem() { Text = "-Select-", Value = "0" });
             report.Add(new SelectListItem() { Text = "USER-REPORT", Value = "1" });
             report.Add(new SelectListItem() { Text = "EBAY-REPORT", Value = "2" });
             report.Add(new SelectListItem() { Text = "KINDBASE-REPORT", Value = "3" });
-            ViewBag.Reports = report;
-            return View();
+            return report;
+        }
+        public ActionResult Report()
+        {
+           
+            var reportInfo = new ReportUserInfo();
+            reportInfo.ReportInfo = new List<Report>();
+            ViewBag.Reports = GetTypeOfReport();
+            return View(reportInfo);
         }
 
         [HttpPost]
         public ActionResult Report(ReportUserInfo reportUserInfo)
         {
-            return View();
+            var entityContext = new EntityContext();
+            var fromDate =Convert.ToDateTime(reportUserInfo.FromDate);
+            var toDate = Convert.ToDateTime(reportUserInfo.ToDate);
+            var reports = new List<Report>();
+
+            if(reportUserInfo.TypeOfReport == 1)
+                reports = entityContext.reportInfo.Where(q => q.Date > fromDate && q.Date < toDate && q.TypeOfReport ==Constants.SystemDonation).ToList();
+            else if(reportUserInfo.TypeOfReport == 3)
+                reports = entityContext.reportInfo.Where(q => q.Date > fromDate && q.Date < toDate && q.TypeOfReport == Constants.KindBase).ToList();
+            else 
+                reports= entityContext.reportInfo.Where(q => q.Date > fromDate && q.Date < toDate && q.TypeOfReport == Constants.Ebay).ToList();
+
+            reportUserInfo.ReportInfo = reports;
+            ViewBag.Reports = GetTypeOfReport();
+            return View(reportUserInfo);
         }
 
         [HttpPost]
@@ -153,9 +174,10 @@ namespace MyNPO.Controllers
                 report.TransactionID = dataRow[4].ToString();
                 report.Net = dataRow[10].ToString();
                 report.Name = dataRow[11].ToString();
-                report.Description = "KindBase";
-                report.Date = dt.ToString("MM/dd/yyyy");    
-                report.Time = dt.ToString("HH:mm:ss");
+                report.Description = Constants.KindBase;
+                report.TypeOfReport = Constants.KindBase;
+                report.Date = dt;    
+                report.Time = dt.ToString(Constants.HourFormat);
                 report.TransactionGuid = Guid.NewGuid();
                 report.UploadDateTime = DateTime.Now;               
                 lReport.Add(report);
@@ -175,7 +197,7 @@ namespace MyNPO.Controllers
                     
 
                 var report = new Report();
-                report.Date = dataRow[0].ToString();
+                report.Date =Convert.ToDateTime(dataRow[0].ToString());
                 report.Time = dataRow[1].ToString();
                 report.TimeZone = dataRow[2].ToString();
                 report.Description = dataRow[3].ToString();
@@ -194,6 +216,7 @@ namespace MyNPO.Controllers
                 report.ReferenceTxnID = dataRow[17].ToString();
                 report.TransactionGuid = Guid.NewGuid();
                 report.UploadDateTime = DateTime.Now;
+                report.TypeOfReport = Constants.Ebay;
                 lReport.Add(report);
             }
             return lReport;

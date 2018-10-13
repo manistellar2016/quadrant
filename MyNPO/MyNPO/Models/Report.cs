@@ -13,7 +13,7 @@ namespace MyNPO.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id { get; set; }
         public Guid TransactionGuid { get; set; }
-        public string Date { get; set; }  
+        public DateTime Date { get; set; }  
         public string Time { get; set; }
         public string TimeZone { get; set; }
         public string Description { get; set; }
@@ -33,6 +33,7 @@ namespace MyNPO.Models
        public DateTime UploadDateTime { get; set; }
        public string PhoneNo { get; set; }
        public string Reason { get; set; }
+       public string  TypeOfReport { get; set; }
 
     }
 }
