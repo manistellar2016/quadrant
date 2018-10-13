@@ -8,7 +8,7 @@ using System.Web.Mvc;
 
 namespace MyNPO.Controllers
 {
-    public class DonationController : Controller
+    public class DonationController : BaseController
     {
       
         // GET: Donation/Create

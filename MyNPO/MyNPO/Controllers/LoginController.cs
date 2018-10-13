@@ -20,6 +20,7 @@ namespace MyNPO.Controllers
         {
             if (login.UserName == "Admin@gmail.com" && login.Password == "Admin")
             {
+                Session[Constants.UserId] = "99";
                 return RedirectToAction("Index", "Home");
             }
             else

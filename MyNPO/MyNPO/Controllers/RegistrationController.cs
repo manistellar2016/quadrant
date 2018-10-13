@@ -10,7 +10,7 @@ using System.Web.Mvc;
 
 namespace MyNPO.Controllers
 {
-    public class RegistrationController : Controller
+    public class RegistrationController : BaseController
     {
        // static string connectionString = ConfigurationManager.AppSettings["DbConnectionString"];
         EntityContext entityContext = new EntityContext();
