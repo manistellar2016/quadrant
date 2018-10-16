@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -37,5 +38,18 @@ namespace MyNPO.Models
         [Required]
         public int TypeOfReport { get; set; }
         public List<Report> ReportInfo { get; set; }
+    }
+
+    public class Event
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Location { get; set; }
+        public string Details { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
+        public string UploadFileName { get; set; }
     }
 }

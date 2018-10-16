@@ -172,6 +172,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\DonationController.cs" />
+    <Compile Include="Controllers\EventController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\RegistrationController.cs" />
@@ -256,9 +257,11 @@
     <Content Include="Views\Home\Report.cshtml" />
     <Content Include="Views\Shared\WithOutMenu.cshtml" />
     <Content Include="Views\Login\_ViewStart.cshtml" />
+    <Content Include="Views\Event\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Images\Events\" />
     <Folder Include="Views\Base\" />
   </ItemGroup>
   <ItemGroup>
