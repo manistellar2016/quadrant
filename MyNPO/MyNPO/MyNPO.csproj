@@ -195,15 +195,20 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\dataTables.bootstrap.min.css" />
+    <Content Include="Content\event.css" />
     <Content Include="Documents\Requirements.txt" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Images\akhanda-parayanam-aug-18th[1].jpg" />
+    <Content Include="Images\Facebook-PNG.png" />
     <Content Include="Images\ganapathi-navagraha-homam[1].jpg" />
+    <Content Include="Images\googleplus.jpg" />
+    <Content Include="Images\Linkedin_Shiny_Icon.svg.png" />
     <Content Include="Images\saibaba-seattle-temple-hours[1].jpg" />
     <Content Include="Images\satyanarayana-vratham-august-25th[1].jpg" />
+    <Content Include="Images\Twitter-icon.png" />
     <Content Include="Images\varalakshmi-vratam-august-24th[1].jpg" />
     <Content Include="Scripts\Animation.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -258,6 +263,7 @@
     <Content Include="Views\Shared\WithOutMenu.cshtml" />
     <Content Include="Views\Login\_ViewStart.cshtml" />
     <Content Include="Views\Event\Create.cshtml" />
+    <Content Include="Views\Event\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

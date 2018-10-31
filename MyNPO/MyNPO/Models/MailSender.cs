@@ -8,6 +8,11 @@ using System.Web;
 
 namespace MyNPO.Models
 {
+    public class EventInfo
+    {
+        public string Email { get; set; }
+        public Event Event { get; set; }
+    }
     public class MailSender
     {
         public void Send()
@@ -91,30 +96,26 @@ namespace MyNPO.Models
 
         }
 
-        public void SendMailWithInvite()
+        public static void EventSendMail(EventInfo eventInfo)
         {
-            string senderID = "shenbakumar24@gmail.com";
-            string senderPassword = "sen_senba24";
-            string hostName = "smtp.gmail.com";
-
-            senderID = "admin@saibabaseattle.com";
-            senderPassword = "SaiBaba@123";
-            hostName = "smtp.1and1.com";
-            string body = "Event";
+           var senderID = "admin@saibabaseattle.com";
+           var senderPassword = "SaiBaba@123";
+           var hostName = "smtp.1and1.com";
+            string body = eventInfo.Event.Details;
 
 
             MailMessage msg = new MailMessage();
             msg.Body = body;
-            msg.Subject = "EventMail";
+            msg.Subject = eventInfo.Event.Name;
             msg.From = new MailAddress(senderID, "SaiBaba");
-            msg.To.Add(new MailAddress("senbagakumars@gmail.com", "Senbaga"));
+            msg.To.Add(new MailAddress(eventInfo.Email, eventInfo.Email));
             msg.IsBodyHtml = true;
 
             SmtpClient smtp = new SmtpClient(hostName, 587);
 
             smtp.Credentials = new NetworkCredential(senderID,senderPassword);
 
-            msg = GetCalanderInviteMsg3(msg);
+            msg = GetCalanderInviteMsg3(msg,eventInfo.Event);
 
             smtp.EnableSsl = true;
 
@@ -123,13 +124,13 @@ namespace MyNPO.Models
 
         }
 
-        public MailMessage GetCalanderInviteMsg3(MailMessage msg)
+        public static MailMessage GetCalanderInviteMsg3(MailMessage msg,Event eventDetails)
         {
 
             string TimeFormat = "yyyyMMdd\\THHmmss\\Z";
 
-            string start = DateTime.Now.AddDays(1).AddHours(1).ToString(TimeFormat);
-            string end = DateTime.Now.AddDays(1).AddHours(2).ToString(TimeFormat);
+            string start = eventDetails.StartDate.ToString(TimeFormat);
+            string end = eventDetails.EndDate.ToString(TimeFormat);
 
             StringBuilder sb = new StringBuilder();
             sb.AppendLine("BEGIN:VCALENDAR");
@@ -156,10 +157,10 @@ namespace MyNPO.Models
             sb.AppendLine(string.Format("ORGANIZER:MAILTO:{0}", msg.From.Address));
             sb.AppendLine(string.Format("ATTENDEE;CN=\"{0}\";RSVP=TRUE:mailto:{1}", msg.To[0].DisplayName, msg.To[0].Address));
             sb.AppendLine("LAST-MODIFIED:" + DateTime.UtcNow.AddDays(-1).ToString(TimeFormat));
-            sb.AppendLine("LOCATION:RedMond");
+            sb.AppendLine("LOCATION:"+eventDetails.Location);
             sb.AppendLine("SEQUENCE:0");
             sb.AppendLine("STATUS:CONFIRMED");
-            sb.AppendLine("SUMMARY:SaiBaba Pradishta Event");
+            sb.AppendLine("SUMMARY:"+eventDetails.Name);
             sb.AppendLine("TRANSP:TRANSPARENT");
 
             sb.AppendLine("BEGIN:VALARM");
