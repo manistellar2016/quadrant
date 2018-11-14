@@ -32,7 +32,28 @@ namespace MyNPO.Controllers
             return View(it);
         }
 
-        // GET: Registration/Create
+        public ActionResult Report()
+        {
+            var familyInfo = new FamilyReportInfo();
+            familyInfo.ReportInfo = new List<FamilyInfo>();
+            return View(familyInfo);
+        }
+
+
+        [HttpPost]
+        public ActionResult Report(FamilyReportInfo familyReportInfo)
+        {
+            var entityContext = new EntityContext();
+            var fromDate = Convert.ToDateTime(familyReportInfo.FromDate);
+            var toDate = Convert.ToDateTime(familyReportInfo.ToDate);
+            var reports = new List<FamilyInfo>();
+           
+                reports = entityContext.familyInfos.Where(q => q.CreateDate > fromDate && q.CreateDate < toDate).ToList();
+
+            familyReportInfo.ReportInfo = reports;
+            return View(familyReportInfo);
+        }
+            // GET: Registration/Create
         public ActionResult Create()
         {           
             //ViewBag.VolunteerInfo = "PrimaryInfo";
@@ -66,7 +87,7 @@ namespace MyNPO.Controllers
                 }
                 else
                 {
-
+                    familyInfo.CreateDate = DateTime.Now;
                     familyInfo.PrimaryId = transactionId;
                     familyInfo?.DependentDetails?.ForEach(s => s.PrimaryId = transactionId);
 

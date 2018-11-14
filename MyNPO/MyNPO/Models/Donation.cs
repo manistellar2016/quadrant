@@ -40,6 +40,18 @@ namespace MyNPO.Models
         public List<Report> ReportInfo { get; set; }
     }
 
+    public class FamilyReportInfo
+    {
+            [Required]
+            public string FromDate { get; set; }
+            [Required]
+            public string ToDate { get; set; }
+            [Required]
+            public int TypeOfReport { get; set; }
+            public List<FamilyInfo> ReportInfo { get; set; }
+        
+    }
+
     public class Event
     {
         [Key]

@@ -134,15 +134,14 @@
 </div>
 }
 
-<div>
+@*<div>
     @Html.ActionLink("Back to List", "Index")
-</div>
+</div>*@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 
     <script>
-              
 
         $('#Next').click(function () {
 
@@ -238,13 +237,42 @@
                 url: url,
                 contentType: "application/json"
             }).done(function (res) {
-               
+
+                $("#errorMsg").text(res);
+
                 if (res == 'Saved') {
-                    location.href = "/Registration/Index";
+                //    location.href = "/Registration/Index";
+
+                    $('#FirstName_validationMessage').text("");
+                    $('#LastName_validationMessage').text("");
+                    $('#DateOfBirth_validationMessage').text("");
+
+                    $('#FirstName').val("");
+                    $('#LastName').val("");
+                    $('#DateOfBirth').val("");
+                    $('#MobileNo').val("");
+                    $('#Email').val("");
+                    $('#City').val("");
+                    $('#ZipCode').val("");
+                    $('#Address').val("");
+                    $('#MaritalStatus').val("");
+                    $('#MarriageDate').val("");
+                    $('#NoOfDependents').val("");
+                    $('#IsVolunteer').prop('checked', false);
+
+                    for (var i = 1; i <= dependentCount; i++) {
+                        $('#DependentName' + i).val("");
+                        $('#DependentDOB' + i).val("");
+                        $('#DependentRelationShip' + i).val("");
+                    }
+                    if (dependentCount > 0) {
+                        $('#NoOfDependents').val(0);
+                        $('#Next').click();
+                    }
                 }
-                else {
-                    $("#errorMsg").text(res);
-                }
+                //else {
+                //    $("#errorMsg").text(res);
+                //}
             });
         });
     </script>

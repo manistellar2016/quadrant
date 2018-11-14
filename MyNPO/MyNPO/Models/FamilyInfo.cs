@@ -30,5 +30,6 @@ namespace MyNPO.Models
         public int NoOfDependents { get; set; }
         public bool IsVolunteer { get; set; }
         public List<DependentInfo> DependentDetails { get; set; }
+        public DateTime CreateDate { get; set; }
     }
 }

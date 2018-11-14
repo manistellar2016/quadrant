@@ -37,13 +37,14 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Reports</a>
                         <ul class="dropdown-menu">
                             <li>@Html.ActionLink("UploadTransactions", "Upload", "Home")</li>
-                            <li>@Html.ActionLink("Report", "Report", "Home")</li>
+                            <li>@Html.ActionLink("Transaction Report", "Report", "Home")</li>
+                            <li>@Html.ActionLink("Registration Report", "Report", "Registration")</li>
                         </ul>
                     </li>
 
                     <li class="separator"></li>
 
-                    <li>@Html.ActionLink("Registration", "Index", "Registration")</li>
+                    <li>@Html.ActionLink("Registration", "Create", "Registration")</li>
                     <li>@Html.ActionLink("Event", "Index", "Event")</li>
 
                     <li class="separator"></li>
