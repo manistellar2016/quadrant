@@ -1,11 +1,11 @@
-    @import url("http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900,400italic");
-    @import url("//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.css");
-    body {
+	@import url("http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900,400italic");
+	@import url("//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.css");
+	body {
 		padding: 60px 0px;
 		background-color: rgb(220, 220, 220);
 	}
-    
-    .event-list {
+	
+	.event-list {
 		list-style: none;
 		font-family: 'Lato', sans-serif;
 		margin: 0px;
@@ -81,32 +81,36 @@
 		color: rgb(30, 30, 30);
 		font-size: 11pt;
 		font-weight: 300;
-        padding: 3px 0px;
+		padding: 3px 0px;
 	}
-    .event-list > li > .info > ul > li > a {
+	.event-list > li > .info > ul > li > a {
 		display: block;
 		width: 100%;
 		color: rgb(30, 30, 30);
 		text-decoration: none;
 	} 
-    .event-list > li > .social > ul > li {    
-        padding: 0px;
-    }
-    .event-list > li > .social > ul > li > a {
-        padding: 3px 0px;
+	.event-list > li > .social > ul > li {    
+		padding: 0px;
+	}
+	.event-list > li > .social > ul > li > a {
+		padding: 3px 0px;
 	} 
 	.event-list > li > .info > ul > li:hover,
 	.event-list > li > .social > ul > li:hover {
 		color: rgb(30, 30, 30);
 		background-color: rgb(200, 200, 200);
 	}
+
+
 	.facebook a,
 	.twitter a,
+	.instagram a,
+	.youtube a,
 	.google-plus a {
 		display: block;
 		width: 100%;
 		color: rgb(75, 110, 168) !important;
-	}
+}
 	.twitter a {
 		color: rgb(79, 213, 248) !important;
 	}
@@ -125,6 +129,15 @@
 		color: rgb(255, 255, 255) !important;
 		background-color: rgb(221, 75, 57) !important;
 	}
+.instagram:hover a {
+    color: rgb(255, 255, 255) !important;
+    background-color: rgb(75, 110, 168) !important;
+}
+
+.youtube:hover a {
+    color: rgb(255, 255, 255) !important;
+    background-color: rgb(75, 110, 168) !important;
+}
 
 	@media (min-width: 768px) {
 		.event-list > li {
@@ -176,12 +189,12 @@
 			display: block;
 			width: 40px;
 		}
-        .event-list > li > .social > ul {
-            border-left: 1px solid rgb(230, 230, 230);
-        }
+		.event-list > li > .social > ul {
+			border-left: 1px solid rgb(230, 230, 230);
+		}
 		.event-list > li > .social > ul > li {			
 			display: block;
-            padding: 0px;
+			padding: 0px;
 		}
 		.event-list > li > .social > ul > li > a {
 			display: block;

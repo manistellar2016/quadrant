@@ -21,15 +21,40 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("EBay Donation", "Donation", "Home")</li>
-                    <li>@Html.ActionLink("UploadTransactions", "Upload", "Home")</li>
-                    <li>@Html.ActionLink("Report", "Report", "Home")</li>
-                    <li>@Html.ActionLink("Registration", "Index", "Registration")</li>
-                    <li>@Html.ActionLink("Cash", "Create", "Donation")</li>
-                    <li>@Html.ActionLink("Event", "Index", "Event")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    <li class="separator"></li>
 
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Donation</a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("EBay Donation", "Donation", "Home")</li>
+                            <li>@Html.ActionLink("Cash", "Create", "Donation")</li>
+                        </ul>
+                    </li>
+
+                    <li class="separator"></li>
+
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Reports</a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("UploadTransactions", "Upload", "Home")</li>
+                            <li>@Html.ActionLink("Report", "Report", "Home")</li>
+                        </ul>
+                    </li>
+
+                    <li class="separator"></li>
+
+                    <li>@Html.ActionLink("Registration", "Index", "Registration")</li>
+                    <li>@Html.ActionLink("Event", "Index", "Event")</li>
+
+                    <li class="separator"></li>
+
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Help</a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("About", "About", "Home")</li>
+                            <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                        </ul>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -44,7 +69,7 @@
                             <p>Saibaba Seattle is a Non Profit Tax Exempt Organization with 501(C)(3) status. All the donations to Saibaba Seattle are Tax Deductible.</p>
                         </marquee>
                     </div>
-                </div>          
+                </div>
         </footer>
     </div>    
     @Scripts.Render("~/bundles/jquery")
