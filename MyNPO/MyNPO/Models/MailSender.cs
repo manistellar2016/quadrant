@@ -65,13 +65,9 @@ namespace MyNPO.Models
 
         public void SendMail()
         {
-            string senderID = "shenbakumar24@gmail.com";
-            string senderPassword = "sen_senba24";
-            string hostName = "smtp.gmail.com";
-
-            senderID = "admin@saibabaseattle.com";
-            senderPassword = "SaiBaba@123";
-            hostName = "smtp.1and1.com";
+            var senderID = "admin@saibabaseattle.com";
+            var senderPassword = "SaiBaba@123";
+            var hostName = "smtp.1and1.com";
             string body = "test";
            
             try
