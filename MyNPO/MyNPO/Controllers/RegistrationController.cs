@@ -15,13 +15,13 @@ namespace MyNPO.Controllers
        // static string connectionString = ConfigurationManager.AppSettings["DbConnectionString"];
         EntityContext entityContext = new EntityContext();
         // GET: Registration
-        public ActionResult Index()
-        {           
+        //public ActionResult Index()
+        //{
 
-            var it=entityContext.familyInfos.ToList();
-            it.ForEach(q => q.DependentDetails = entityContext.dependentInfos.Where(t => t.PrimaryId == q.PrimaryId).ToList());            
-            return View(it);
-        }
+        //    var it = entityContext.familyInfos.ToList();
+        //    it.ForEach(q => q.DependentDetails = entityContext.dependentInfos.Where(t => t.PrimaryId == q.PrimaryId).ToList());
+        //    return View(it);
+        //}
 
         // GET: Registration/Details/5
         public ActionResult Details(Guid id)
@@ -60,6 +60,13 @@ namespace MyNPO.Controllers
             return View();
         }
 
+        [HttpPost]
+        public JsonResult FirstNameSearch(string keyword)
+        {
+            var result = entityContext.familyInfos.Where(q => q.FirstName.ToLower().StartsWith(keyword)).Select(q => q).ToList();
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
         public ActionResult Next(FamilyInfo family)
         {
             family.DependentDetails = new List<DependentInfo>();
@@ -79,29 +86,62 @@ namespace MyNPO.Controllers
                 if (familyInfo.MarriageDate == DateTime.MinValue)
                     familyInfo.MarriageDate = null;
 
+                familyInfo.CreateDate = DateTime.Now;
+                familyInfo.PrimaryId = transactionId;
+
                 var famInfo = entityContext.familyInfos.FirstOrDefault(q => q.FirstName == familyInfo.FirstName && q.LastName == familyInfo.LastName && q.DateOfBirth == familyInfo.DateOfBirth);
                 if (famInfo != null && !string.IsNullOrEmpty(famInfo.FirstName))
                 {
-                    //ViewBag.Error = $"Already {familyInfo.FirstName} is there";
                     status = $"Already {familyInfo.FirstName} is there";
+                    if (!string.IsNullOrEmpty(familyInfo.Donation) && !string.IsNullOrWhiteSpace(familyInfo.Donation))
+                    {
+                        AddedTransactions(familyInfo);
+                        status +=$"--Thanks for the Donation Amount {familyInfo.Donation}";
+                        entityContext.SaveChanges();
+                    }
                 }
                 else
                 {
-                    familyInfo.CreateDate = DateTime.Now;
-                    familyInfo.PrimaryId = transactionId;
                     familyInfo?.DependentDetails?.ForEach(s => s.PrimaryId = transactionId);
-
                     entityContext.familyInfos.Add(familyInfo);
+
+                    AddedTransactions(familyInfo);
+
                     entityContext.SaveChanges();
                     status = "Saved";
                 }
-               
+
             }
             catch(Exception ex)
             {
                 status = "Sorry Try Again";
             }
             return Json(status, JsonRequestBehavior.AllowGet);
+        }
+
+        private void AddedTransactions(FamilyInfo familyInfo)
+        {
+            if (!string.IsNullOrEmpty(familyInfo.Donation) && !string.IsNullOrWhiteSpace(familyInfo.Donation))
+            {
+                var report = new Report()
+                {
+                    Name = $"{familyInfo.FirstName} {familyInfo.LastName}",
+                    FromEmailAddress = familyInfo.Email,
+                    Net = familyInfo.Donation,
+                    PhoneNo = familyInfo.MobileNo,
+                    Date = familyInfo.CreateDate,
+                    Time = familyInfo.CreateDate.ToString(Constants.HourFormat),
+                    Description = $"SystemDonation", // Plan to LoginUser
+                    Reason = familyInfo.DonationReason,
+                    TransactionGuid = Guid.NewGuid(),
+                    ReferenceTxnID = familyInfo.PrimaryId.ToString().Replace("-", ""),
+                    TransactionID = familyInfo.PrimaryId.ToString(),
+                    UploadDateTime = familyInfo.CreateDate,
+                    TypeOfReport = Constants.SystemDonation
+
+                };
+                entityContext.reportInfo.Add(report);
+            }
         }
 
         // GET: Registration/Edit/5
