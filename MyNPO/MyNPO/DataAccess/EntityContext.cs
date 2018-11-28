@@ -25,6 +25,7 @@ namespace MyNPO.DataAccess
         public DbSet<DependentInfo> dependentInfos { get; set; }
         public DbSet<Report> reportInfo { get; set; }
         public DbSet<Event> eventInfos { get; set; }
+        public DbSet<CalendarInfo> calendarInfo { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -35,7 +36,7 @@ namespace MyNPO.DataAccess
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
 
             Configuration.ProxyCreationEnabled = false;
-            Configuration.LazyLoadingEnabled = false;           
+            Configuration.LazyLoadingEnabled = false;
 
             base.OnModelCreating(modelBuilder);
        

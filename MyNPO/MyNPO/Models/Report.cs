@@ -7,6 +7,7 @@ using System.Web;
 
 namespace MyNPO.Models
 {
+
     public class Report
     {
         [Key]
