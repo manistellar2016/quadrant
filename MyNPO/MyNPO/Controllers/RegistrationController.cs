@@ -48,7 +48,7 @@ namespace MyNPO.Controllers
             var toDate = Convert.ToDateTime(familyReportInfo.ToDate);
             var reports = new List<FamilyInfo>();
            
-                reports = entityContext.familyInfos.Where(q => q.CreateDate > fromDate && q.CreateDate < toDate).ToList();
+                reports = entityContext.familyInfos.Where(q => q.CreateDate >= fromDate && q.CreateDate <= toDate).ToList();
 
             familyReportInfo.ReportInfo = reports;
             return View(familyReportInfo);
