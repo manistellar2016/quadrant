@@ -5,7 +5,7 @@
 
 <h2>Report</h2>
 
-<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+@*<link href="~/Content/bootstrap.min.css" rel="stylesheet" />*@
 <link href="~/Content/dataTables.bootstrap.min.css" rel="stylesheet" />
 
 @using (Html.BeginForm())
@@ -54,14 +54,14 @@
         <tbody>
             @foreach (var item in Model.ReportInfo)
             {
-            <tr>
-                <td>@item.FirstName</td>
-                <td>@item.LastName</td>
-                <td>@item.DateOfBirth</td>
-                <td>@item.Address</td>
-                <td>@item.MobileNo</td>
-                <td>@item.Email</td>
-            </tr>
+                <tr>
+                    <td>@item.FirstName</td>
+                    <td>@item.LastName</td>
+                    <td>@item.DateOfBirth</td>
+                    <td>@item.Address</td>
+                    <td>@item.MobileNo</td>
+                    <td>@item.Email</td>
+                </tr>
             }
         </tbody>
     </table>
@@ -74,10 +74,11 @@
 
 
 <script type="text/javascript">
+    $('#bootstrap-data-table').DataTable();
+    $(".dropdown-toggle").dropdown(); 
         $(document).ready(function () {
             if (@Model.ReportInfo.Count() > 0) {
                 $('#ReportTable').show();
-                $('#bootstrap-data-table').DataTable();
             }
        });
 </script>
