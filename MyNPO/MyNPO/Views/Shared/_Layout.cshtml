@@ -44,6 +44,17 @@
 
                     <li class="separator"></li>
 
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">AdminUser</a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("MailNotificationUsers", "Index", "Admin")</li>
+                            <li>@Html.ActionLink("RoomBooking", "Index", "Calendar")</li>
+                            <li>@Html.ActionLink("AbishakamRegistration", "Index", "EventCalendar")</li>
+                        </ul>
+                    </li>
+
+                    <li class="separator"></li>
+
                     <li>@Html.ActionLink("Registration", "Create", "Registration")</li>
                     <li>@Html.ActionLink("Event", "Index", "Event")</li>
 

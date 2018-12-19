@@ -64,4 +64,14 @@ namespace MyNPO.Models
         public DateTime EndDate { get; set; }
         public string UploadFileName { get; set; }
     }
+
+    public class AdminUser
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Email { get; set; }
+        public string PhoneNumber { get; set; }
+    }
 }

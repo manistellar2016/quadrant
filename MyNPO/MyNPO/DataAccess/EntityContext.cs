@@ -26,6 +26,7 @@ namespace MyNPO.DataAccess
         public DbSet<Report> reportInfo { get; set; }
         public DbSet<Event> eventInfos { get; set; }
         public DbSet<CalendarInfo> calendarInfo { get; set; }
+        public DbSet<AdminUser> adminUser { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
