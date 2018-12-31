@@ -1,5 +1,6 @@
 ﻿using MyNPO.DataAccess;
 using MyNPO.Models;
+using MyNPO.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,7 @@ namespace MyNPO.Controllers
 {
     public class DonationController : BaseController
     {
-      
+
         // GET: Donation/Create
         public ActionResult Create()
         {
@@ -25,13 +26,20 @@ namespace MyNPO.Controllers
             {
                 if (ModelState.IsValid)
                 {
-
                     var guid = Guid.NewGuid();
                     var dt = DateTime.Now;
                     EntityContext entityContext = new EntityContext();
+                    
+                    // Generate the transaction id for cash transactions
+                    var existingTransactionsPerDay = entityContext.reportInfo.Where(x => x.Date.Day == DateTime.Today.Day).ToList().Count;
+                    var prefixCount = existingTransactionsPerDay <= 0 ? 1 : existingTransactionsPerDay + 1;
+
+                    var transactionId = DateTime.Now.Date.ToString("yyyyMMdd") + "-" + prefixCount;
+
                     var report = new Report()
                     {
                         Name = donation.Name,
+                        TransactionID = transactionId,
                         FromEmailAddress = donation.Email,
                         Net = donation.DonationAmount,
                         PhoneNo = donation.Phone,
@@ -45,11 +53,15 @@ namespace MyNPO.Controllers
                         TypeOfReport = Constants.SystemDonation
 
                     };
+
                     entityContext.reportInfo.Add(report);
                     entityContext.SaveChanges();
                     // TODO: Add insert logic here
                     ModelState.Clear();
                     ViewBag.Status = "Successfully Saved";
+
+                    // Generated PDF Receipt and Send email attachment.
+                    ReceiptGenerator.GenerateDonationReceiptPdf(donation, report);
 
                     return View();
                 }
