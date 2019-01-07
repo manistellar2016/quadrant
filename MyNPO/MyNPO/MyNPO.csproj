@@ -193,6 +193,7 @@
     <Compile Include="Models\Constants.cs" />
     <Compile Include="Models\DependentInfo.cs" />
     <Compile Include="Models\Donation.cs" />
+    <Compile Include="Models\DonorInfo.cs" />
     <Compile Include="Models\FamilyInfo.cs" />
     <Compile Include="Models\LoginInfo.cs" />
     <Compile Include="Models\MailSender.cs" />
