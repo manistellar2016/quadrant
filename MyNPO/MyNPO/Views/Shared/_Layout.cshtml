@@ -16,7 +16,6 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("SaiBaba", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
@@ -36,7 +35,7 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Reports</a>
                         <ul class="dropdown-menu">
-                            <li>@Html.ActionLink("UploadTransactions", "Upload", "Home")</li>
+                            <li>@Html.ActionLink("Upload Transactions", "Upload", "Home")</li>
                             <li>@Html.ActionLink("Transaction Report", "Report", "Home")</li>
                             <li>@Html.ActionLink("Registration Report", "Report", "Registration")</li>
                         </ul>
@@ -45,11 +44,11 @@
                     <li class="separator"></li>
 
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">AdminUser</a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin Services</a>
                         <ul class="dropdown-menu">
-                            <li>@Html.ActionLink("MailNotificationUsers", "Index", "Admin")</li>
-                            <li>@Html.ActionLink("RoomBooking", "Index", "Calendar")</li>
-                            <li>@Html.ActionLink("AbishakamRegistration", "Index", "EventCalendar")</li>
+                            <li>@Html.ActionLink("Email Notification", "Index", "Admin")</li>
+                            <li>@Html.ActionLink("Room Booking", "Index", "Calendar")</li>
+                            <li>@Html.ActionLink("Abhishekam Registration", "Index", "EventCalendar")</li>
                         </ul>
                     </li>
 
@@ -58,15 +57,8 @@
                     <li>@Html.ActionLink("Registration", "Create", "Registration")</li>
                     <li>@Html.ActionLink("Event", "Index", "Event")</li>
 
-                    <li class="separator"></li>
-
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Help</a>
-                        <ul class="dropdown-menu">
-                            <li>@Html.ActionLink("About", "About", "Home")</li>
-                            <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                        </ul>
-                    </li>
+                    <li>@Html.ActionLink("Contact us", "Contact", "Home")</li>
+                    <li>@Html.ActionLink("Logout", "LogOut")</li>
                 </ul>
             </div>
         </div>
