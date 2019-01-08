@@ -13,6 +13,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 
 namespace MyNPO.Controllers
 {  
@@ -67,7 +68,7 @@ namespace MyNPO.Controllers
             var report = new List<SelectListItem>();
             report.Add(new SelectListItem() { Text = "-Select-", Value = "0" });
             report.Add(new SelectListItem() { Text = "USER-REPORT", Value = "1" });
-            report.Add(new SelectListItem() { Text = "EBAY-REPORT", Value = "2" });
+            report.Add(new SelectListItem() { Text = "PAYPAL-REPORT", Value = "2" });
             report.Add(new SelectListItem() { Text = "KINDBASE-REPORT", Value = "3" });
             return report;
         }
@@ -221,6 +222,13 @@ namespace MyNPO.Controllers
                 lReport.Add(report);
             }
             return lReport;
+        }
+
+        public ActionResult LogOut()
+        {
+            FormsAuthentication.SignOut();
+            Session.Abandon(); // This will clear the session at the end of request
+            return Redirect("/Login/Index");
         }
     }
 }
