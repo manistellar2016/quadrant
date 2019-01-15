@@ -19,6 +19,12 @@ namespace MyNPO.Controllers
             userId = Convert.ToInt16(Session[Constants.UserId].ToString());
         }
 
+        public ActionResult LogOut()
+        {
+            FormsAuthentication.SignOut();
+            Session.Abandon(); // This will clear the session at the end of request
+            return Redirect("/Login/Index");
+        }
         public int UserId => userId;
     }
 }

@@ -16,15 +16,21 @@ namespace MyNPO.Models
         public string FirstName { get; set; }      
         
         public string LastName { get; set; }
-        [DisplayFormat(ApplyFormatInEditMode=true ,DataFormatString = "{0:MM/dd/yyyy}")]
 
+        [DisplayFormat(ApplyFormatInEditMode=true ,DataFormatString = "{0:MM/dd/yyyy}")]
         public DateTime DateOfBirth { get; set; }
+
+        [Required(ErrorMessage = "You must provide a phone number")]
+        [DataType(DataType.PhoneNumber)]
+        [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$", ErrorMessage = "Not a valid phone number")]
         public string MobileNo { get; set; }
+
         public string Email { get; set; }
         public string City { get; set; }
         public string ZipCode { get; set; }
         public string Address { get; set; }
         public string MaritalStatus { get; set; }
+
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
         public DateTime? MarriageDate { get; set; }
         public int NoOfDependents { get; set; }

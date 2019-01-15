@@ -1,6 +1,7 @@
 ﻿using MyNPO.Models;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -18,7 +19,10 @@ namespace MyNPO.Controllers
         [HttpPost]
         public ActionResult Index(Login login)
         {
-            if (login.UserName == "Admin@gmail.com" && login.Password == "Admin")
+            var loginUser = ConfigurationManager.AppSettings["LoginUser"].ToString();
+            var loginPassword = ConfigurationManager.AppSettings["LoginPassword"].ToString();
+
+            if (login.UserName == loginUser && login.Password == loginPassword)
             {
                 Session[Constants.UserId] = "99";
                 return RedirectToAction("Index", "Home");
