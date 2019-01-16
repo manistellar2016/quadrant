@@ -78,6 +78,11 @@ namespace MyNPO.Controllers
         public JsonResult Create(FamilyInfo familyInfo)
         {
             string status = "";
+
+            if (familyInfo.MarriageDate != null)
+            {
+                familyInfo.MaritalStatus = "Married";
+            }
             try
             {              
                 // TODO: Add insert logic here

@@ -3,30 +3,31 @@
 }
 
 <!DOCTYPE html>
-<html>
+<h1 style="text-align:center;"> Abhishekam Registration <h1>
+    <html>
 <head>
-    <link href="~/Scripts/dhtmlxScheduler/dhtmlxscheduler.css" rel="stylesheet" />
-    <title>Register the Temple Event</title>
+     <link href="~/Scripts/dhtmlxScheduler/dhtmlxscheduler.css" rel="stylesheet" />
+     <title>Register the Temple Event</title>
 
-    <script type="text/javascript">
-    function goBack()
-    {
-         window.history.back()
-    }
-    </script>
+            <script type="text/javascript">
+                function goBack()
+                {
+                    window.history.back()
+                }
+            </script>
 
-    <style>
-        body {
-            background-color: #eee;
-        }
-    </style>
-</head>
-<body>
+            <style>
+                body {
+                    background-color: #eee;
+                }
+            </style>
+        </head>
+        <body>
 
-    <a href="#" onclick="goBack()">Back</a>
+            <a href="#" onclick="goBack()">Back</a>
 
-    <div style="height:700px;width:900px;margin:0 auto">
-        @Html.Raw(Model.Render())
-    </div>
-</body>
-</html>
+            <div style="height:700px;width:900px;margin:0 auto">
+                @Html.Raw(Model.Render())
+            </div>
+        </body>
+    </html>
