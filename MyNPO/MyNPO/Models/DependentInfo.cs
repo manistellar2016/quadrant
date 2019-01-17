@@ -16,6 +16,8 @@ namespace MyNPO.Models
         //[ForeignKey("FamilyInfo")]
         public Guid PrimaryId { get; set; }
         public string Name { get; set; }
+
+        [DataType(DataType.Date)]
         public string DOB { get; set; }
         public string RelationShip { get; set; }
     }

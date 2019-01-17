@@ -11,11 +11,17 @@ namespace MyNPO.Models
     {
         [Required]
         public string Name { get; set; }
+
+        [Required]
+        [RegularExpression("^[a-z0-9_\\+-]+(\\.[a-z0-9_\\+-]+)*@[a-z0-9-]+(\\.[a-z0-9]+)*\\.([a-z]{2,4})$", ErrorMessage = "Invalid email format.")]
         public string Email { get; set; }
+
+        [Required]
+        [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$", ErrorMessage = "Wrong Phone number")]
         public string Phone { get; set; }
+
         [Required]
         public string DonationAmount { get; set; }
-        [Required]
         public string Reason { get; set; }
     }
 
@@ -33,8 +39,10 @@ namespace MyNPO.Models
     public class ReportUserInfo
     {
         [Required]
+        [DataType(DataType.Date)]
         public string FromDate { get; set; }
-        [Required]    
+        [Required]
+        [DataType(DataType.Date)]
         public string ToDate { get; set; }
         [Required]
         public int TypeOfReport { get; set; }
@@ -43,13 +51,15 @@ namespace MyNPO.Models
 
     public class FamilyReportInfo
     {
-            [Required]
-            public string FromDate { get; set; }
-            [Required]
-            public string ToDate { get; set; }
-            [Required]
-            public int TypeOfReport { get; set; }
-            public List<FamilyInfo> ReportInfo { get; set; }
+        [Required]
+        [DataType(DataType.Date)]
+        public string FromDate { get; set; }
+        [Required]
+        [DataType(DataType.Date)]
+        public string ToDate { get; set; }
+        [Required]
+        public int TypeOfReport { get; set; }
+        public List<FamilyInfo> ReportInfo { get; set; }
         
     }
 
@@ -58,10 +68,20 @@ namespace MyNPO.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
+
+        [Required]
         public string Name { get; set; }
+
+        [Required]
         public string Location { get; set; }
+
+        [Required]
         public string Details { get; set; }
+
+        [DataType(DataType.Date)]
         public DateTime StartDate { get; set; }
+
+        [DataType(DataType.Date)]
         public DateTime EndDate { get; set; }
         public string UploadFileName { get; set; }
     }
@@ -71,8 +91,16 @@ namespace MyNPO.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
+
+        [Required]
         public string Name { get; set; }
+
+        [Required]
+        [RegularExpression("^[a-z0-9_\\+-]+(\\.[a-z0-9_\\+-]+)*@[a-z0-9-]+(\\.[a-z0-9]+)*\\.([a-z]{2,4})$", ErrorMessage = "Invalid email format.")]
         public string Email { get; set; }
+
+        [Required]
+        [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$", ErrorMessage = "Wrong Phone number")]
         public string PhoneNumber { get; set; }
     }
 }

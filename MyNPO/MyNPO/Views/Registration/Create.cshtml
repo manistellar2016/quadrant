@@ -279,6 +279,11 @@
         });
 
         $('#Complete').click(function () {
+            $('#FirstName_validationMessage').text("");
+            $('#LastName_validationMessage').text("");
+            $('#DateOfBirth_validationMessage').text("");
+            $('#MobileNo_validationMessage').text("");
+            $('#Email_validationMessage').text("");
 
             var validation = true;
             if ($('#FirstName').val() == '') {
@@ -296,6 +301,15 @@
                 validation = false;
             }
 
+            if ($('#MobileNo').val() == '') {
+                $('#MobileNo_validationMessage').text('MobileNo is Required');
+                validation = false;
+            }
+
+            if ($('#Email').val() == '') {
+                $('#Email_validationMessage').text('Email is Required');
+                validation = false;
+            }
             if (!validation)
                 return false;
 
@@ -342,6 +356,8 @@
                     $('#FirstName_validationMessage').text("");
                     $('#LastName_validationMessage').text("");
                     $('#DateOfBirth_validationMessage').text("");
+                    $('#MobileNo_validationMessage').text("");
+                    $('#Email_validationMessage').text("");
 
                     $('#FirstName').val("");
                     $('#LastName').val("");

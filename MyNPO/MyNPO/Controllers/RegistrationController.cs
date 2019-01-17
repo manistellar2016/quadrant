@@ -4,7 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.Entity.Migrations;
+using System.Data.Entity.Validation;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 
@@ -83,6 +85,7 @@ namespace MyNPO.Controllers
             {
                 familyInfo.MaritalStatus = "Married";
             }
+            StringBuilder sb = new StringBuilder();
             try
             {              
                 // TODO: Add insert logic here
@@ -118,9 +121,17 @@ namespace MyNPO.Controllers
                 }
 
             }
-            catch(Exception ex)
+            catch (DbEntityValidationException e)
             {
-                status = "Sorry Try Again";
+               foreach (var eve in e.EntityValidationErrors)
+                { 
+                    foreach (var ve in eve.ValidationErrors)
+                   {
+                        sb.AppendFormat(ve.ErrorMessage + ",");
+                    }
+
+                }
+                return Json(sb.ToString(), JsonRequestBehavior.AllowGet);
             }
             return Json(status, JsonRequestBehavior.AllowGet);
         }
