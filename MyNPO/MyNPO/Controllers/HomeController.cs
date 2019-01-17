@@ -27,7 +27,7 @@ namespace MyNPO.Controllers
 
         public ActionResult Donation()
         {
-            ViewBag.Message = "Sai Baba Donation";
+            ViewBag.Message = "Paypal Donation";
             return View();
         }
 
@@ -222,13 +222,6 @@ namespace MyNPO.Controllers
                 lReport.Add(report);
             }
             return lReport;
-        }
-
-        public ActionResult LogOut()
-        {
-            FormsAuthentication.SignOut();
-            Session.Abandon(); // This will clear the session at the end of request
-            return Redirect("/Login/Index");
         }
     }
 }

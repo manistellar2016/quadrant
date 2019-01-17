@@ -97,11 +97,12 @@ namespace MyNPO.Controllers
                 var famInfo = entityContext.familyInfos.FirstOrDefault(q => q.FirstName == familyInfo.FirstName && q.LastName == familyInfo.LastName && q.DateOfBirth == familyInfo.DateOfBirth);
                 if (famInfo != null && !string.IsNullOrEmpty(famInfo.FirstName))
                 {
-                    status = $"Already {familyInfo.FirstName} is there";
-                    if (!string.IsNullOrEmpty(familyInfo.Donation) && !string.IsNullOrWhiteSpace(familyInfo.Donation))
+                    var donorName = $"{familyInfo.FirstName} + ' ' + {familyInfo.LastName}";
+                    status = $"{donorName} is already registered.";
+                    if (!string.IsNullOrWhiteSpace(familyInfo.Donation))
                     {
                         AddedTransactions(familyInfo);
-                        status +=$"--Thanks for the Donation Amount {familyInfo.Donation}";
+                        status+= $"--Thanks for the Donation of {familyInfo.Donation}";
                         entityContext.SaveChanges();
                     }
                 }

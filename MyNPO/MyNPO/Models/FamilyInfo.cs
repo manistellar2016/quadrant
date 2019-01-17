@@ -17,6 +17,7 @@ namespace MyNPO.Models
 
         public string LastName { get; set; }
         [DisplayFormat(ApplyFormatInEditMode=true, DataFormatString = "{0:MM/dd/yyyy}")]
+        public DateTime DateOfBirth { get; set; }
 
         [Display(Name = "Date of Birth")]
         [DataType(DataType.Date)]
@@ -34,6 +35,7 @@ namespace MyNPO.Models
         public string ZipCode { get; set; }
         public string Address { get; set; }
         public string MaritalStatus { get; set; }
+
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
 
         [Display(Name = "MarriageDate")]

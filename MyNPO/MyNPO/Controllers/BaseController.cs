@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using System.Web.Security;
 
 namespace MyNPO.Controllers
 {
@@ -19,6 +20,12 @@ namespace MyNPO.Controllers
             userId = Convert.ToInt16(Session[Constants.UserId].ToString());
         }
 
+        public ActionResult LogOut()
+        {
+            FormsAuthentication.SignOut();
+            Session.Abandon(); // This will clear the session at the end of request
+            return Redirect("/Login/Index");
+        }
         public int UserId => userId;
     }
 }
