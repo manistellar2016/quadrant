@@ -68,6 +68,7 @@ namespace MyNPO.Controllers
                 entityContext.eventInfos.Add(createEvent);
                 entityContext.SaveChanges();
                 ViewBag.Status = "Successfully Created";
+                return View();
             }
             catch (Exception ex)
             {
