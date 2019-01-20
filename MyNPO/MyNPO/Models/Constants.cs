@@ -7,7 +7,7 @@ namespace MyNPO.Models
 {
     public class Constants
     {
-        public const string Ebay = "EBay";
+        public const string PayPal = "PayPal";
         public const string SystemDonation = "SystemDonation";
         public const string KindBase = "KindBase";
         public const string HourFormat = "HH:mm:ss";

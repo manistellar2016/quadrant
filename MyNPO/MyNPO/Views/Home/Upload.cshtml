@@ -5,7 +5,7 @@
     ViewBag.Title = "Upload";
 }
 
-<h2>Upload</h2>
+<h2>Upload Transactions</h2>
 
 @using (Html.BeginForm("Upload", "Home", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
@@ -15,8 +15,8 @@
     <div class="form-group">
         <select class="form-control" id="selectReport" name="selectReport">
             <option value="0" selected>-Select-</option>
-            <option value="1">EBAY</option>
-            <option value="2">KINDBASE</option>
+            <option value="1">PayPal</option>
+            <option value="2">KindBase</option>
         </select>
     </div>
 

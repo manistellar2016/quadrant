@@ -40,36 +40,41 @@ namespace MyNPO.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(HttpPostedFileBase postedFile, FormCollection eventCreation)
         {
-            string path = Server.MapPath("~/Images/Events/");
-            string fileName = string.Empty;
-            if (!Directory.Exists(path))
+            try
             {
-                Directory.CreateDirectory(path);
+                string path = Server.MapPath("~/Images/Events/");
+                string fileName = string.Empty;
+                if (!Directory.Exists(path))
+                {
+                    Directory.CreateDirectory(path);
+                }
+
+                if (!string.IsNullOrEmpty(postedFile?.FileName))
+                {
+                    fileName = Path.GetFileName(postedFile.FileName);
+                    postedFile.SaveAs(path + fileName);
+                }
+
+                var createEvent = new Event()
+                {
+                    Name = eventCreation["EventName"],
+                    Location = eventCreation["EventLocation"],
+                    Details = eventCreation["EventDescription"],
+                    StartDate = Convert.ToDateTime(eventCreation["EventStartDate"]),
+                    EndDate = Convert.ToDateTime(eventCreation["EventEndDate"]),
+                    UploadFileName = fileName
+                };
+                var entityContext = new EntityContext();
+                entityContext.eventInfos.Add(createEvent);
+                entityContext.SaveChanges();
+                ViewBag.Status = "Successfully Created";
+                return View();
             }
-
-            if (!string.IsNullOrEmpty(postedFile?.FileName))
+            catch (Exception ex)
             {
-                fileName = Path.GetFileName(postedFile.FileName);
-                postedFile.SaveAs(path + fileName);
+                return View();
+
             }
-
-            var createEvent = new Event()
-            {
-                Name = eventCreation["EventName"],
-                Location = eventCreation["EventLocation"],
-                Details = eventCreation["EventDescription"],
-                StartDate = Convert.ToDateTime(eventCreation["EventStartDate"]),
-                EndDate = Convert.ToDateTime(eventCreation["EventEndDate"]),
-                UploadFileName = fileName
-            };
-            var entityContext = new EntityContext();
-            entityContext.eventInfos.Add(createEvent);
-            entityContext.SaveChanges();
-
-            ViewBag.Status = "Successfully Created";
-            return View();
         }
-        
-
     }
 }

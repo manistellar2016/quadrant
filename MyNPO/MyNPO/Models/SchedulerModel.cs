@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace MyNPO.Models
 {
@@ -7,7 +8,13 @@ namespace MyNPO.Models
         //id, text, start_date and end_date properties are mandatory
         public int id { get; set; }
         public string text { get; set; }
+
+        [Display(Name = "Start Date")]
+        [DataType(DataType.Date)]
         public DateTime start_date { get; set; }
+
+        [Display(Name = "End Date")]
+        [DataType(DataType.Date)]
         public DateTime end_date { get; set; }
     }
 }
