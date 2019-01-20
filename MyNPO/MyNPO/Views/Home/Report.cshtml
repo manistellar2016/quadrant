@@ -3,7 +3,7 @@
     ViewBag.Title = "Report";
 }
 
-<h2>Report</h2>
+<h2>Transaction Report</h2>
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
@@ -53,6 +53,8 @@
                 <th>Email</th>
                 <th>DonationAmount</th>
                 <th>Date Time</th>
+                <th>Reason</th>
+                <th>CurrencyType</th>
             </tr>
         </thead>
         <tbody>
@@ -64,6 +66,8 @@
                     <td>@item.FromEmailAddress</td>
                     <td>@item.Net</td>
                     <td>@item.Date  : @item.Time</td>
+                    <td>@item.Reason</td>
+                    <td>@item.CurrencyType</td>
                 </tr>
             }
         </tbody>

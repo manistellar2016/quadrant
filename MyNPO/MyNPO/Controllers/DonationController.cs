@@ -39,6 +39,7 @@ namespace MyNPO.Controllers
                         Name = donation.Name,
                         TransactionID = transactionId,
                         FromEmailAddress = donation.Email,
+                        CurrencyType = donation.DonationType,
                         Net = donation.DonationAmount,
                         PhoneNo = donation.Phone,
                         Date = dt,

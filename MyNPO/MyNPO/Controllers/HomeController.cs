@@ -94,7 +94,7 @@ namespace MyNPO.Controllers
             else if(reportUserInfo.TypeOfReport == 3)
                 reports = entityContext.reportInfo.Where(q => q.Date > fromDate && q.Date < toDate && q.TypeOfReport == Constants.KindBase).ToList();
             else 
-                reports= entityContext.reportInfo.Where(q => q.Date > fromDate && q.Date < toDate && q.TypeOfReport == Constants.Ebay).ToList();
+                reports= entityContext.reportInfo.Where(q => q.Date > fromDate && q.Date < toDate && q.TypeOfReport == Constants.PayPal).ToList();
 
             reportUserInfo.ReportInfo = reports;
             ViewBag.Reports = GetTypeOfReport();
@@ -218,7 +218,7 @@ namespace MyNPO.Controllers
                 report.ReferenceTxnID = dataRow[17].ToString();
                 report.TransactionGuid = Guid.NewGuid();
                 report.UploadDateTime = DateTime.Now;
-                report.TypeOfReport = Constants.Ebay;
+                report.TypeOfReport = Constants.PayPal;
                 lReport.Add(report);
             }
             return lReport;

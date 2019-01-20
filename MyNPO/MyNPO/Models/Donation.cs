@@ -21,6 +21,9 @@ namespace MyNPO.Models
         public string Phone { get; set; }
 
         [Required]
+        public string DonationType { get; set; }
+
+        [Required]
         public string DonationAmount { get; set; }
         public string Reason { get; set; }
     }
