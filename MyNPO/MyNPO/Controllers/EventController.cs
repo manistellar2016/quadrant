@@ -2,6 +2,8 @@
 using MyNPO.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
+using System.Data.Entity.Migrations;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -11,10 +13,12 @@ namespace MyNPO.Controllers
 {
     public class EventController : BaseController
     {
+        EntityContext entityContext = new EntityContext();
+
         // GET: Event
         public ActionResult Index()
         {
-            var entityContext = new EntityContext();
+            entityContext = new EntityContext();
             var lEvents = entityContext.eventInfos.ToList();
             return View(lEvents);
         }
@@ -74,6 +78,61 @@ namespace MyNPO.Controllers
             {
                 return View();
 
+            }
+        }
+
+        // GET: Admin/Edit/5
+        public ActionResult Edit(int id)
+        {
+            var eUser = entityContext.eventInfos.FirstOrDefault(q => q.Id == id);
+            return View(eUser);
+        }
+
+        // POST: Admin/Edit/5
+        [HttpPost]
+        public ActionResult Edit(int id, Event eventInfos)
+        {
+            try
+            {
+                var eventId = entityContext.eventInfos.FirstOrDefault(q => q.Id == id);
+
+                eventId.Name = eventInfos.Name; eventId.Location = eventInfos.Location; eventId.Details = eventInfos.Details;
+                eventId.StartDate = eventInfos.StartDate; eventId.EndDate = eventInfos.EndDate; eventId.UploadFileName = eventInfos.UploadFileName;
+                entityContext.Entry(eventId).State = EntityState.Modified;
+                entityContext.eventInfos.AddOrUpdate(eventId);
+                // TODO: Add update logic here
+                entityContext.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+        // GET: Admin/Delete/5
+        public ActionResult Delete(int id)
+        {
+            var eventId = entityContext.eventInfos.FirstOrDefault(q => q.Id == id);
+            return View(eventId);
+        }
+
+        // POST: Admin/Delete/5
+        [HttpPost]
+        public ActionResult Delete(int id, Event eventInfo)
+        {
+            try
+            {
+                // TODO: Add delete logic here
+                var eventId = entityContext.eventInfos.FirstOrDefault(q => q.Id == id);
+                entityContext.Entry(eventId).State = EntityState.Deleted;
+                entityContext.eventInfos.Remove(eventId);
+                entityContext.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View();
             }
         }
     }

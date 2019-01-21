@@ -88,14 +88,16 @@ namespace MyNPO.Controllers
             var fromDate =Convert.ToDateTime(reportUserInfo.FromDate);
             var toDate = Convert.ToDateTime(reportUserInfo.ToDate);
             var reports = new List<Report>();
+            if(fromDate!=DateTime.MinValue && toDate!=DateTime.MinValue)
+            {
+                if (reportUserInfo.TypeOfReport == 1)
+                    reports = entityContext.reportInfo.Where(q => q.Date >= fromDate && q.Date <= toDate && q.TypeOfReport == Constants.SystemDonation).ToList();
+                else if (reportUserInfo.TypeOfReport == 3)
+                    reports = entityContext.reportInfo.Where(q => q.Date >= fromDate && q.Date <= toDate && q.TypeOfReport == Constants.KindBase).ToList();
+                else
+                    reports = entityContext.reportInfo.Where(q => q.Date >= fromDate && q.Date <= toDate && q.TypeOfReport == Constants.PayPal).ToList();
 
-            if(reportUserInfo.TypeOfReport == 1)
-                reports = entityContext.reportInfo.Where(q => q.Date > fromDate && q.Date < toDate && q.TypeOfReport ==Constants.SystemDonation).ToList();
-            else if(reportUserInfo.TypeOfReport == 3)
-                reports = entityContext.reportInfo.Where(q => q.Date > fromDate && q.Date < toDate && q.TypeOfReport == Constants.KindBase).ToList();
-            else 
-                reports= entityContext.reportInfo.Where(q => q.Date > fromDate && q.Date < toDate && q.TypeOfReport == Constants.PayPal).ToList();
-
+            }
             reportUserInfo.ReportInfo = reports;
             ViewBag.Reports = GetTypeOfReport();
             return View(reportUserInfo);
