@@ -20,14 +20,14 @@ namespace MyNPO.Models
 
     public class CalendarInfo
     {
+        public string Name { get; set; }
         public int Id { get; set; }
         public string Text { get; set; }
-
-        [DataType(DataType.Date)]
         public DateTime StartDate { get; set; }
-
-        [DataType(DataType.Date)]
         public DateTime EndDate { get; set; }
         public string Type { get; set; }
+        public string Address { get; set; }
+        public string Gothram { get; set; }
+        public string ReferenceTxnID { get; set; }
     }
 }

@@ -89,12 +89,15 @@
         <div class="form-group">
             @Html.LabelFor(model => model.MaritalStatus, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.MaritalStatus, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Status" } })
+                <div>
+                @Html.RadioButtonFor(model => model.MaritalStatus, "Single", new { htmlAttributes = new { @class = "form-control" } }) Single
+                @Html.RadioButtonFor(model => model.MaritalStatus, "Married", new { htmlAttributes = new { @class = "form-control" } }) Married
+                </div>
                 @Html.ValidationMessageFor(model => model.MaritalStatus, "", new { @class = "text-danger" })
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group" id="marriageDate">
             @Html.LabelFor(model => model.MarriageDate, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.MarriageDate, new { htmlAttributes = new { @class = "form-control", placeholder = "Ex: MM/DD/YYYY" } })
@@ -128,7 +131,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.NoOfDependents, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.NoOfDependents, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter NoOfDependents" } })
+                @Html.EditorFor(model => model.NoOfDependents, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter NoOfDependents", @min = "0" } })
                 @Html.ValidationMessageFor(model => model.NoOfDependents, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -155,45 +158,55 @@
 
 
 @section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
+                    @Scripts.Render("~/bundles/jqueryval")
 
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
-  
+     <script type="text/javascript">
+         // Initially, Hide the MarriedDate textbox when Web Form is loaded
+         $('#marriageDate').hide();
+         // Function for Hidding MarriageDate when clicking SIngle button
+         $(document).ready(function () {
+             $("input[Value='Married']").click(function () {
+                 $('#marriageDate').show();
+                        });
+             $("input[Value='Single']").click(function () {
+                 $('#marriageDate').hide();
+                        });
+                    });
 
-    <script type="text/javascript">
 
         $(document).ready(function () {
-            var filterData = {};
+                        var filterData = {};
             $("#FirstName").autocomplete({
-                minLength: 2,
+                            minLength: 2,
                 source: function (request, response) {
                     $.ajax({
-                        url: "/Registration/FirstNameSearch",
+                                    url: "/Registration/FirstNameSearch",
                         type: "POST",
                         dataType: "json",
                         data: { keyword: request.term },
                         success: function (data) {
-                            filterData = data;
-                            response($.map(data, function (item) {
-                                return { label: item.FirstName, value: item.FirstName };
-                            }))
+                                        filterData = data;
+                                        response($.map(data, function (item) {
+                                            return { label: item.FirstName, value: item.FirstName };
+                                        }))
                         },
                         error: function () {
-                            alert('something went wrong !');
-                        }
-                    })
+                                        alert('something went wrong !');
+                                    }
+                                })
                 },
                 change: function (event, ui) {
-                    var selectedObject;
-                    var selectedValue = $("#FirstName").val();
+                                var selectedObject;
+                                var selectedValue = $("#FirstName").val();
                     $(filterData).each(function (index, value) {
-                        if (selectedValue == value.FirstName) {
-                            selectedObject = value;
-                        }
-                    });
-                    
+                                    if (selectedValue == value.FirstName) {
+                                        selectedObject = value;
+                                    }
+                                });
 
-                    if (selectedObject != null) {
+
+                                if (selectedObject != null) {
                         $("#LastName").val(selectedObject.LastName);
                         $("#DateOfBirth").val(ToJavaScriptDate(selectedObject.DateOfBirth));
                         $("#MobileNo").val(selectedObject.MobileNo);
@@ -204,21 +217,21 @@
                         $("#MaritalStatus").val(selectedObject.MaritalStatus);
                         $("#MarrigaeDate").val(selectedObject.MarrigaeDate);
                         $("#NoOfDependents").val(selectedObject.NoOfDependents);
-                        if (selectedObject.IsVolunteer)
+                                    if (selectedObject.IsVolunteer)
                             $("#IsVolunteer").prop('checked', true);
                         else
                             $("#IsVolunteer").prop('checked', false);
-                    }
-                },
+                                }
+                            },
                 focus: function () { return false; },
                 messages: {
-                    noResults: "", results: function (resultsCount) { }
-                }
-            });
-        });
+                                noResults: "", results: function (resultsCount) { }
+                            }
+                        });
+                    });
 
-        function ToJavaScriptDate(value) {
-            var pattern = /Date\(([^)]+)\)/;
+                    function ToJavaScriptDate(value) {
+                        var pattern = /Date\(([^)]+)\)/;
             var results = pattern.exec(value);
             var dt = new Date(parseFloat(results[1]));
             return (dt.getMonth() + 1) + "/" + dt.getDate() + "/" + dt.getFullYear();
@@ -266,6 +279,11 @@
         });
 
         $('#Complete').click(function () {
+            $('#FirstName_validationMessage').text("");
+            $('#LastName_validationMessage').text("");
+            $('#DateOfBirth_validationMessage').text("");
+            $('#MobileNo_validationMessage').text("");
+            $('#Email_validationMessage').text("");
 
             var validation = true;
             if ($('#FirstName').val() == '') {
@@ -283,6 +301,15 @@
                 validation = false;
             }
 
+            if ($('#MobileNo').val() == '') {
+                $('#MobileNo_validationMessage').text('MobileNo is Required');
+                validation = false;
+            }
+
+            if ($('#Email').val() == '') {
+                $('#Email_validationMessage').text('Email is Required');
+                validation = false;
+            }
             if (!validation)
                 return false;
 
@@ -329,6 +356,8 @@
                     $('#FirstName_validationMessage').text("");
                     $('#LastName_validationMessage').text("");
                     $('#DateOfBirth_validationMessage').text("");
+                    $('#MobileNo_validationMessage').text("");
+                    $('#Email_validationMessage').text("");
 
                     $('#FirstName').val("");
                     $('#LastName').val("");

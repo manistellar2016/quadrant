@@ -10,11 +10,9 @@ namespace MyNPO.Models
         public string text { get; set; }
 
         [Display(Name = "Start Date")]
-        [DataType(DataType.Date)]
         public DateTime start_date { get; set; }
 
         [Display(Name = "End Date")]
-        [DataType(DataType.Date)]
         public DateTime end_date { get; set; }
     }
 }
