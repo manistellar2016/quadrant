@@ -9,6 +9,7 @@ using DHTMLX.Scheduler.Data;
 using MyNPO.Models;
 using MyNPO.DataAccess;
 using System.Data.Entity.Migrations;
+using System.Data.Entity;
 
 namespace MyNPO.Controllers
 {
@@ -27,7 +28,7 @@ namespace MyNPO.Controllers
         public JsonResult EventSearch(string keyWord)
         {
             EntityContext entityContext = new EntityContext();
-            var result = entityContext.reportInfo.Where(q => q.Name.ToLower().StartsWith(keyWord)).Select(q => q.Name).ToList();
+            var result = entityContext.reportInfo.Where(q => q.Name.ToLower().StartsWith(keyWord)).Select(q => q.Name).Distinct().ToList();
 
             return Json(result, JsonRequestBehavior.AllowGet);
         }
@@ -35,8 +36,8 @@ namespace MyNPO.Controllers
         public JsonResult EventInfoSearch(string keyWord)
         {
             EntityContext entityContext = new EntityContext();
-            var result1 = entityContext.reportInfo.FirstOrDefault(q => q.Name == keyWord);
-            var result2 = entityContext.calendarInfo.FirstOrDefault(q => q.Type == "TempleEvent" && q.StartDate >=DateTime.Now && q.ReferenceTxnID == result1.ReferenceTxnID);
+            var result1 = entityContext.reportInfo.FirstOrDefault(q => q.Name == keyWord && q.Date.Year >= DateTime.Now.Year && q.Date.Month >= DateTime.Now.Month && q.Date.Day >= DateTime.Now.Day);
+            var result2 = entityContext.calendarInfo.FirstOrDefault(q => q.Type == "TempleEvent" && q.ReferenceTxnID == result1.ReferenceTxnID);
             var result = new PriestServices();
             if (result1 != null && result2 != null)
             {
