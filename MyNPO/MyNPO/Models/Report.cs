@@ -45,9 +45,12 @@ namespace MyNPO.Models
         public int Id { get; set; }
         [Required]
         public string Name { get; set; }
-        public string Email { get; set; }
-        public string Phone { get; set; }
+        [RegularExpression("^[a-z0-9_\\+-]+(\\.[a-z0-9_\\+-]+)*@[a-z0-9-]+(\\.[a-z0-9]+)*\\.([a-z]{2,4})$", ErrorMessage = "Invalid email format.")]
         [Required]
+        public string Email { get; set; }
+        [Required]
+        [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$", ErrorMessage = "Wrong mobile number")]
+        public string Phone { get; set; }
         public string DonationAmount { get; set; }
         [Required]
         public string Comments { get; set; }

@@ -15,6 +15,31 @@ namespace MyNPO.Controllers
 {
     public class EventCalendarController : BaseController
     {
+        private Dictionary<string, int> service = new Dictionary<string, int>();
+
+        public EventCalendarController()
+        {
+            service.Add("Sai Archana", 11);
+            service.Add("Sai Abhishekam", 101);
+            service.Add("Sai Annadanam", 151);
+            service.Add("Garland Sponsorship", 151);
+            service.Add("Vahana puja", 51);
+            service.Add("Gruha pravesham", 251);
+            service.Add("Gruha pravesham  Homam  Vratam", 301);
+            service.Add("Satya Narayana Swami Vratam", 151);
+            service.Add("Nama Karanam (At Home)", 125);
+            service.Add("Annaprasana (At Home)", 125);
+            service.Add("Nama Karanam (At Temple)", 51);
+            service.Add("Annaprasana (At Temple)", 51);
+            service.Add("Satya Narayana Swami Vratam (At Temple)", 101);
+            service.Add("Samuhika Vratam", 51);
+            service.Add("Kalyanam (At Temple)", 501);
+        }
+
+        private string GetPriceByService(string serviceName)
+        {
+            return $"${service[serviceName].ToString()}";
+        }
         // GET: EventCalendar
         public ActionResult Index()
         {
@@ -79,10 +104,10 @@ namespace MyNPO.Controllers
             var cEvent = new List<CalendarEvent>();
             try
             {
-                var data = entityContext.calendarInfo.Where(t => t.Type == "TempleEvent").ToList();
+                var data = entityContext.calendarInfo.Join(entityContext.reportInfo, ci=>ci.ReferenceTxnID, ri=>ri.ReferenceTxnID,(ci,ri)=> new { cinfo=ci, rinfo=ri}).Where(t => t.cinfo.Type == "TempleEvent").ToList();
                 data.ForEach(q =>
                 {
-                    cEvent.Add(new CalendarEvent() { id = q.Id, text = q.Text, start_date = q.StartDate, end_date = q.EndDate });
+                    cEvent.Add(new CalendarEvent() { id = q.cinfo.Id, text = q.cinfo.Name + " "+ q.cinfo.Text + " " + q.rinfo.FromEmailAddress + " "+ q.rinfo.PhoneNo + " "+ q.cinfo.Address, start_date = q.cinfo.StartDate, end_date = q.cinfo.EndDate });
                 });
             }
             catch (Exception ex)
@@ -121,7 +146,7 @@ namespace MyNPO.Controllers
                         var rInfo = entityContext.reportInfo.FirstOrDefault(q => q.ReferenceTxnID == cInfo.ReferenceTxnID);
                         if (rInfo != null)
                         {
-                            rInfo.Name = priestServices.Name; rInfo.FromEmailAddress = priestServices.Email; rInfo.Net = priestServices.DonationAmount;
+                            rInfo.Name = priestServices.Name; rInfo.FromEmailAddress = priestServices.Email; rInfo.Net = GetPriceByService(priestServices.PriestServicesList);
                             rInfo.PhoneNo = priestServices.Phone; rInfo.PriestServicesList = priestServices.PriestServicesList; rInfo.Date = dt;
                             rInfo.Reason = priestServices.Comments; rInfo.Description = priestServices.PaymentMode == "1" ? "PayPal" : priestServices.PaymentMode == "2" ? "Cash" : "Cheque";
                             rInfo.TypeOfReport = priestServices.PaymentMode == "1" ? Constants.PayPal : Constants.SystemDonation;
@@ -147,7 +172,7 @@ namespace MyNPO.Controllers
                             Name = priestServices.Name,
                             TransactionID = transactionId,
                             FromEmailAddress = priestServices.Email,
-                            Net = priestServices.DonationAmount,
+                            Net = GetPriceByService(priestServices.PriestServicesList),
                             PhoneNo = priestServices.Phone,
                             PriestServicesList = priestServices.PriestServicesList,
                             Date = dt,
