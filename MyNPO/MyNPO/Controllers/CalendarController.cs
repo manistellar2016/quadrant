@@ -113,7 +113,7 @@ namespace MyNPO.Controllers
                         break;
                 }
                 entityContext.SaveChanges();
-                Helper.NotificationToAdmins(typeOfAction, cInfo);
+                Notifications.NotificationToAdmins(typeOfAction, cInfo);
             }
             catch(Exception ex)
             {

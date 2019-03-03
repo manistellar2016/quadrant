@@ -22,7 +22,7 @@ namespace MyNPO.Controllers
             var loginUser = ConfigurationManager.AppSettings["LoginUser"].ToString();
             var loginPassword = ConfigurationManager.AppSettings["LoginPassword"].ToString();
 
-            if (login.UserName == loginUser && login.Password == loginPassword)
+            if (login.UserName == loginUser && login.Password == MyNPO.Utilities.Helper.Decrypt(loginPassword))
             {
                 Session[Constants.UserId] = "99";
                 return RedirectToAction("Index", "Home");

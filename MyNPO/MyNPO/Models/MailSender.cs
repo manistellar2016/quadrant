@@ -10,21 +10,33 @@ using System.Web;
 
 namespace MyNPO.Models
 {
-    public class Helper
+
+    public class Notifications
     {
         public static void NotificationToAdmins(string typeOfAction, CalendarInfo calendarInfo)
         {
+            var senderID = ConfigurationManager.AppSettings["SenderEmailAddress"].ToString();
             EntityContext entityContext = new EntityContext();
             var adminList = entityContext.adminUser.ToList();
-            var allMails = string.Join(";", adminList.Select(q => q.Email).ToList());
+            string allMails = string.Empty;
+            allMails = senderID;
+            if(adminList!=null && adminList.Count > 0)
+                allMails = string.Join(";", adminList.Select(q => q.Email).ToList());
+
             string Name = string.Empty;
-
+            var userMailId = new string[2];
+            if(typeOfAction.Contains(";"))
+            {
+                userMailId = typeOfAction.Split(';');
+                allMails = allMails + ";" + userMailId[1];
+            }
+            
             if (typeOfAction.Contains("Temple"))
-                Name = "Block the Calendar for Priest Services Below";
+                Name = "Priest Services for"+ calendarInfo.Name;
             else
-                Name = "Block the Calendar for Room Services Below";
+                Name = "Room Services Below";
 
-            MailSender.EventSendMail(new EventInfo() { Email = allMails, Event = new Event() { Details = typeOfAction + "-Title- " + calendarInfo.Text, EndDate = calendarInfo.EndDate, StartDate = calendarInfo.StartDate, Location = "Redmond", Name = Name } });
+            MailSender.EventSendMail(new EventInfo() { Email = allMails, Event = new Event() { Details = typeOfAction + "-Title- " + calendarInfo.Text, EndDate = calendarInfo.EndDate, StartDate = calendarInfo.StartDate, Location = calendarInfo.Address ?? "Redmond", Name = Name } });
         }
     }
 
@@ -40,8 +52,8 @@ namespace MyNPO.Models
 
         public static void EventSendMail(EventInfo eventInfo)
         {
-           var senderID = ConfigurationManager.AppSettings["SenderEmailAddress"].ToString();
-           var senderPassword = ConfigurationManager.AppSettings["SenderEmailPassword"].ToString();
+            var senderID = ConfigurationManager.AppSettings["SenderEmailAddress"].ToString();
+            var senderPassword = MyNPO.Utilities.Helper.Decrypt(ConfigurationManager.AppSettings["SenderEmailPassword"].ToString());
            var hostName = ConfigurationManager.AppSettings["SmtpHostName"].ToString();
             string body = eventInfo.Event.Details;
 
@@ -64,6 +76,7 @@ namespace MyNPO.Models
 
             msg = GetCalanderInviteMsg3(msg,eventInfo.Event);
 
+            //smtp.UseDefaultCredentials = true;
             smtp.EnableSsl = true;
 
             smtp.Send(msg);

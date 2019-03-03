@@ -60,9 +60,11 @@ namespace MyNPO.Controllers
         [HttpGet]
         public JsonResult EventInfoSearch(string keyWord)
         {
+            CalendarInfo result2 = null;
             EntityContext entityContext = new EntityContext();
             var result1 = entityContext.reportInfo.FirstOrDefault(q => q.Name == keyWord && q.Date.Year >= DateTime.Now.Year && q.Date.Month >= DateTime.Now.Month && q.Date.Day >= DateTime.Now.Day);
-            var result2 = entityContext.calendarInfo.FirstOrDefault(q => q.Type == "TempleEvent" && q.ReferenceTxnID == result1.ReferenceTxnID);
+            if(result1!=null)
+                result2 = entityContext.calendarInfo.FirstOrDefault(q => q.Type == "TempleEvent" && q.ReferenceTxnID == result1.ReferenceTxnID);
             var result = new PriestServices();
             if (result1 != null && result2 != null)
             {
@@ -93,7 +95,6 @@ namespace MyNPO.Controllers
             var scheduler = new DHXScheduler(this);
             var currentDate = DateTime.Now;
             scheduler.InitialDate = new DateTime(currentDate.Year, currentDate.Month, currentDate.Day);
-
             scheduler.LoadData = true;
             scheduler.EnableDataprocessor = true;
             return scheduler;
@@ -218,6 +219,8 @@ namespace MyNPO.Controllers
                         // Generated PDF Receipt and Send email attachment.
                         // ReceiptGenerator.GenerateDonationReceiptPdf(priestServices, report);
                         entityContext.SaveChanges();
+                        cInfo.Name = $"{cInfo.Name} {report.PhoneNo} {cInfo.Text}";
+                        Notifications.NotificationToAdmins("Temple Priest Service;"+priestServices.Email, cInfo);
                     }
                     //priestServices = new PriestServices();
                     //priestServices.Scheduler = GetScheduler();
@@ -228,9 +231,10 @@ namespace MyNPO.Controllers
                     return View(priestServices);
                 }
             }
-            catch
+            catch(Exception ex)
             {
-                return View();
+                throw ex;
+                //return View();
             }
         }
 
@@ -265,9 +269,10 @@ namespace MyNPO.Controllers
                             var report = entityContext.reportInfo.FirstOrDefault(q => q.ReferenceTxnID == cInfo.ReferenceTxnID);
                             entityContext.reportInfo.Remove(report);
                             entityContext.calendarInfo.Remove(cInfo);
-                            typeOfAction = "Temple Event Cancelled";
+                            typeOfAction = "Temple Event Cancelled;"+ report.FromEmailAddress;
                             entityContext.SaveChanges();
-                            //Helper.NotificationToAdmins(typeOfAction, cInfo);
+                            cInfo.Name = $"{cInfo.Name} {report.PhoneNo} {cInfo.Text}";
+                            Notifications.NotificationToAdmins(typeOfAction, cInfo);
                         }
                         break;
                     default:// "update"

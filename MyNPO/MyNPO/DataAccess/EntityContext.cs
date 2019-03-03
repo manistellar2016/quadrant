@@ -14,7 +14,16 @@ namespace MyNPO.DataAccess
 {
     public class EntityContext : DbContext
     {
-        public static string connectionString = ConfigurationManager.AppSettings["DbConnectionString"];
+        private static string GetConnectionString()
+        {
+            string sqlConnectionString= ConfigurationManager.AppSettings["DbConnectionString"];
+            string[] sqlComponents = sqlConnectionString.Split(';');
+            string passwordSection = sqlComponents[3];
+            string passwords = passwordSection.Trim().Replace("Password=", " ");
+            string decrypt = MyNPO.Utilities.Helper.Decrypt(passwords.Trim());
+            return $"{sqlComponents[0]};{sqlComponents[1]};{sqlComponents[2]};Password={decrypt}";
+        }
+        public static string connectionString = GetConnectionString();
         public EntityContext(): base(connectionString)
         {
            
