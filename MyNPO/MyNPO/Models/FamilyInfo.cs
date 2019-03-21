@@ -25,6 +25,7 @@ namespace MyNPO.Models
         public DateTime? DateOfBirth { get; set; }
 
         [Required]
+        [MaxLength(10)]
         [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$", ErrorMessage = "Wrong mobile number")]
         public string MobileNo { get; set; }
 
@@ -44,6 +45,7 @@ namespace MyNPO.Models
         public bool IsVolunteer { get; set; }
         public List<DependentInfo> DependentDetails { get; set; }
         public DateTime CreateDate { get; set; }
+        [RegularExpression("^[$0-9]+$", ErrorMessage ="Invalid donation amount")]
         public string Donation { get; set; }
         public string DonationReason { get; set; }
     }

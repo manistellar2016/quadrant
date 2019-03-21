@@ -84,10 +84,17 @@ namespace MyNPO.Controllers
         [HttpPost]
         public ActionResult Report(ReportUserInfo reportUserInfo)
         {
+            ViewBag.Reports = GetTypeOfReport();
+            var reports = new List<Report>();
+            if (reportUserInfo.TypeOfReport == 0)
+            {
+                ViewBag.Error = "Please Select the Type";
+                reportUserInfo.ReportInfo = reports;
+                return View(reportUserInfo);
+            }
             var entityContext = new EntityContext();
             var fromDate =Convert.ToDateTime(reportUserInfo.FromDate);
             var toDate = Convert.ToDateTime(reportUserInfo.ToDate);
-            var reports = new List<Report>();
             if(fromDate!=DateTime.MinValue && toDate!=DateTime.MinValue)
             {
                 if (reportUserInfo.TypeOfReport == 1)
@@ -99,7 +106,6 @@ namespace MyNPO.Controllers
 
             }
             reportUserInfo.ReportInfo = reports;
-            ViewBag.Reports = GetTypeOfReport();
             return View(reportUserInfo);
         }
 

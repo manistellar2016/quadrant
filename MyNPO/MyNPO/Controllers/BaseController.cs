@@ -23,6 +23,7 @@ namespace MyNPO.Controllers
         public ActionResult LogOut()
         {
             FormsAuthentication.SignOut();
+            Session.Clear();
             Session.Abandon(); // This will clear the session at the end of request
             return Redirect("/Login/Index");
         }
