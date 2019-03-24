@@ -25,7 +25,7 @@ namespace MyNPO.Utilities
     {
         #region "Static Fields"
         private static string SenderEmailAddress = ConfigurationManager.AppSettings["SenderEmailAddress"].ToString();
-        private static string SenderEmailPassword = ConfigurationManager.AppSettings["SenderEmailPassword"].ToString();
+        private static string SenderEmailPassword = Helper.Decrypt(ConfigurationManager.AppSettings["SenderEmailPassword"].ToString());
         private static string OrganizationName = ConfigurationManager.AppSettings["OrganizationName"].ToString();
         private static string OrganizationAddress = ConfigurationManager.AppSettings["OrganizationAddress"].ToString();
         private static string City = ConfigurationManager.AppSettings["City"].ToString();
@@ -45,18 +45,20 @@ namespace MyNPO.Utilities
         private const string Logo = "http://saibabaseattle.com/pics/saibaba-seattle-logo.png";
         #endregion
 
-        public static void GenerateDonationReceiptPdf(Donation donation, Report report)
+        public static void GenerateDonationReceiptPdf(Donation donation, string transactionID)
         {
-            var attachmentName = "DonationReceipt_" + donation.Name + "_" + report.TransactionID + ".pdf";
+            var attachmentName = "DonationReceipt_" + donation.Name + "_" + transactionID + ".pdf";
             var dt = new DataTable();
 
-            dt.Columns.AddRange(new DataColumn[2]
+            dt.Columns.AddRange(new DataColumn[3]
             {
-            new DataColumn("DonationId", typeof(string)),
-            new DataColumn("DonationAmount", typeof(decimal))
+                new DataColumn("TransactionID",typeof(string)),
+                new DataColumn("DonationId", typeof(string)),
+                new DataColumn("DonationAmount", typeof(decimal))
             });
-
-            dt.Rows.Add(report.TransactionID, donation.Reason, $"$+{donation.DonationAmount}");
+            donation.DonationAmount = donation.DonationAmount.Replace("$", "");
+            var drow = dt.NewRow(); drow[0] =transactionID; drow[1] = donation.Reason; drow[2] = $"{donation.DonationAmount}";
+            dt.Rows.Add(drow);
 
             using (StringWriter sw = new StringWriter())
             {
@@ -71,7 +73,7 @@ namespace MyNPO.Utilities
                     //sb.Append("<tr><td colspan = '2'></td></tr>");
                     sb.AppendFormat("<tr><td align='center' colspan = '6'><i><font size=2>{0}</i></td></tr>", NonProfitVerbage);
                     sb.AppendFormat("<tr><td align='center' colspan = '6'><b><font size=2>{0}</b></td></tr>", TaxID);
-                    sb.AppendFormat("<tr><td align='left' colspan = '2'><b><font size=2>Donation No: {0}</b></td></tr>", report.TransactionID);
+                    sb.AppendFormat("<tr><td align='left' colspan = '2'><b><font size=2>Donation No: {0}</b></td></tr>", transactionID);
                     sb.Append("<br />");
                     sb.Append("</table>");
 
@@ -101,7 +103,10 @@ namespace MyNPO.Utilities
                         foreach (DataColumn column in dt.Columns)
                         {
                             sb.Append("<td>");
-                            sb.Append(row[column]);
+                            if (column.ColumnName == "DonationAmount")
+                                sb.Append($"${row[column]}");
+                            else
+                                sb.Append(row[column]);
                             sb.Append("</td>");
                         }
                         sb.Append("</tr>");

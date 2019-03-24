@@ -40,11 +40,11 @@ namespace MyNPO.Controllers
                         TransactionID = transactionId,
                         FromEmailAddress = donation.Email,
                         CurrencyType = donation.DonationType,
-                        Net = donation.DonationAmount,
+                        Net = $"${donation.DonationAmount}",
                         PhoneNo = donation.Phone,
                         Date = dt,
                         Time = dt.ToString(Constants.HourFormat),
-                        Description = $"SystemDonation", // Plan to LoginUser
+                        Description = $"SystemDonation",
                         Reason = donation.Reason,
                         TransactionGuid = guid,
                         ReferenceTxnID = guid.ToString().Replace("-", ""),
@@ -60,7 +60,7 @@ namespace MyNPO.Controllers
                     ViewBag.Status = "Successfully Saved";
 
                     // Generated PDF Receipt and Send email attachment.
-                    ReceiptGenerator.GenerateDonationReceiptPdf(donation, report);
+                    ReceiptGenerator.GenerateDonationReceiptPdf(donation, report.TransactionID);
 
                     return View();
                 }

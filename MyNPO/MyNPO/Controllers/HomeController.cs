@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
+using System.Data.Entity.Core.Objects;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
@@ -98,11 +99,11 @@ namespace MyNPO.Controllers
             if(fromDate!=DateTime.MinValue && toDate!=DateTime.MinValue)
             {
                 if (reportUserInfo.TypeOfReport == 1)
-                    reports = entityContext.reportInfo.Where(q => q.Date >= fromDate && q.Date <= toDate && q.TypeOfReport == Constants.SystemDonation).ToList();
+                    reports = entityContext.reportInfo.Where(q => EntityFunctions.TruncateTime(q.Date) >= fromDate && EntityFunctions.TruncateTime(q.Date) <= toDate && q.TypeOfReport == Constants.SystemDonation).ToList();
                 else if (reportUserInfo.TypeOfReport == 3)
-                    reports = entityContext.reportInfo.Where(q => q.Date >= fromDate && q.Date <= toDate && q.TypeOfReport == Constants.KindBase).ToList();
+                    reports = entityContext.reportInfo.Where(q => EntityFunctions.TruncateTime(q.Date) >= fromDate && EntityFunctions.TruncateTime(q.Date) <= toDate && q.TypeOfReport == Constants.KindBase).ToList();
                 else
-                    reports = entityContext.reportInfo.Where(q => q.Date >= fromDate && q.Date <= toDate && q.TypeOfReport == Constants.PayPal).ToList();
+                    reports = entityContext.reportInfo.Where(q => EntityFunctions.TruncateTime(q.Date) >= fromDate && EntityFunctions.TruncateTime(q.Date) <= toDate && q.TypeOfReport == Constants.PayPal).ToList();
 
             }
             reportUserInfo.ReportInfo = reports;

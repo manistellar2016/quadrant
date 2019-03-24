@@ -69,7 +69,7 @@
                     <div class="form-group">
                         @Html.LabelFor(model => model.Phone, htmlAttributes: new { @class = "control-label col-md-4" })
                         <div class="col-md-8">
-                            @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control", type = "number", maxlength = "10" } })
                             @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -127,13 +127,13 @@
                         @Html.LabelFor(model => model.PaymentMode, htmlAttributes: new { @class = "control-label col-md-4" })
                         <div class="col-md-8" style="float:left">
                             @Html.RadioButtonFor(model => model.PaymentMode, "1", new { htmlAttributes = new { @class = "form-control" } })  @Html.Label("PayPal")
-                            @Html.RadioButtonFor(model => model.PaymentMode, "2", new { htmlAttributes = new { @class = "form-control" } })    @Html.Label("Cash")
+                            @Html.RadioButtonFor(model => model.PaymentMode, "2", new { @class = "", @checked = "true" }) @Html.Label("Cash")
                             @Html.RadioButtonFor(model => model.PaymentMode, "3", new { htmlAttributes = new { @class = "form-control" } })  @Html.Label("Cheque")
                             @Html.ValidationMessageFor(model => model.PaymentMode, "", new { @class = "text-danger" })
                             <div id="linkpaypal" style="display:none">
-                                <a href="/Home/Donation/" target="_blank">PayPal</a>                               
+                                <a href="/Home/Donation/" target="_blank">PayPal</a>
                             </div>
-                            
+
                         </div>
                     </div>
                     <div class="form-group">

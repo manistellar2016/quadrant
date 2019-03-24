@@ -45,7 +45,7 @@ namespace MyNPO.Models
         public bool IsVolunteer { get; set; }
         public List<DependentInfo> DependentDetails { get; set; }
         public DateTime CreateDate { get; set; }
-        [RegularExpression("^[$0-9]+$", ErrorMessage ="Invalid donation amount")]
+        [RegularExpression("^[0-9]+$", ErrorMessage ="Invalid donation amount")]
         public string Donation { get; set; }
         public string DonationReason { get; set; }
     }
