@@ -214,7 +214,7 @@
                             minLength: 2,
                 source: function (request, response) {
                     $.ajax({
-                                    url: "/Registration/FirstNameSearch",
+                        url: "/Registration/FirstNameSearch",
                         type: "POST",
                         dataType: "json",
                         data: { keyword: request.term },
@@ -230,16 +230,16 @@
                                 })
                 },
                 change: function (event, ui) {
-                                var selectedObject;
-                                var selectedValue = $("#FirstName").val();
+                    var selectedObject;
+                    var selectedValue = $("#FirstName").val();
                     $(filterData).each(function (index, value) {
-                                    if (selectedValue == value.FirstName) {
-                                        selectedObject = value;
-                                    }
-                                });
+                        if (selectedValue == value.FirstName) {
+                            selectedObject = value;
+                        }
+                    });
 
 
-                                if (selectedObject != null) {
+                    if (selectedObject != null) {
                         $("#LastName").val(selectedObject.LastName);
                         $("#DateOfBirth").val(ToJavaScriptDate(selectedObject.DateOfBirth));
                         $("#MobileNo").val(selectedObject.MobileNo);
@@ -250,12 +250,12 @@
                         $("#MaritalStatus").val(selectedObject.MaritalStatus);
                         $("#MarrigaeDate").val(selectedObject.MarrigaeDate);
                         $("#NoOfDependents").val(selectedObject.NoOfDependents);
-                                    if (selectedObject.IsVolunteer)
+                        if (selectedObject.IsVolunteer)
                             $("#IsVolunteer").prop('checked', true);
                         else
                             $("#IsVolunteer").prop('checked', false);
-                                }
-                            },
+                    }
+                },
                 focus: function () { return false; },
                 messages: {
                                 noResults: "", results: function (resultsCount) { }
@@ -263,12 +263,16 @@
                         });
                     });
 
-                    function ToJavaScriptDate(value) {
-                        var pattern = /Date\(([^)]+)\)/;
-            var results = pattern.exec(value);
-            var dt = new Date(parseFloat(results[1]));
-            return (dt.getMonth() + 1) + "/" + dt.getDate() + "/" + dt.getFullYear();
-        }
+         function ToJavaScriptDate(value) {
+             var pattern = /Date\(([^)]+)\)/;
+             var results = pattern.exec(value);
+             var dt = new Date(parseFloat(results[1]));
+             var day = dt.getDate() > 9 ? dt.getDate() : "0" + dt.getDate(); // format should be "DD" not "D" e.g 09
+             var month = (dt.getMonth() + 1) > 9 ? (dt.getMonth() + 1) : "0" + (dt.getMonth() + 1);
+
+             //return (dt.getMonth() + 1) + "/" + dt.getDate() + "/" + dt.getFullYear();
+             return (dt.getFullYear()) + "-" + month + "-" + day;
+         }
 
         $('#Next').click(function () {
 
@@ -392,7 +396,7 @@
 
                 $("#errorMsg").text(res);
 
-                if (res == 'Saved' || res.includes('Donation')) {
+                if (res.includes('Saved') || res.includes('Donation')) {
                     //    location.href = "/Registration/Index";
 
                     $('#FirstName_validationMessage').text("");
@@ -426,7 +430,7 @@
                         $('#Next').click();
                     }
 
-                    location.reload();
+                    //location.reload();
                 }
                 //else {
                 //    $("#errorMsg").text(res);

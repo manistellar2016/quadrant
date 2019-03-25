@@ -190,7 +190,7 @@ namespace MyNPO.Utilities
                             var list = adminList.Select(q => q.Email).ToList();
                             foreach (var email in list)
                             {
-                                msg.To.Add(new MailAddress(email, email));
+                                msg.Bcc.Add(new MailAddress(email, email));
                             }
                         }
 
