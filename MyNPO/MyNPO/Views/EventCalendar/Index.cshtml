@@ -85,7 +85,7 @@
                     <div class="form-group">
                         @Html.LabelFor(model => model.EventsDate, htmlAttributes: new { @class = "control-label col-md-4" })
                         <div class="col-md-8">
-                            <input class="form-control" type="datetime-local" id="EventsDate" name="EventsDate" placeholder="EndDate: MM/dd/yyyy HH:mm:ss" />
+                            <input class="form-control" type="datetime-local" id="EventsDate" name="EventsDate" placeholder="EndDate: MM/dd/yyyy HH:mm:ss" , onkeypress = "return false" />
                             @Html.ValidationMessageFor(model => model.EventsDate, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -164,7 +164,6 @@
 
     <script type="text/javascript">
         $(document).ready(function () {
-
             $('input[name=PaymentMode]').click(function () {
                 if ($(this).val() == '1') {
                     $("#linkpaypal").show();
@@ -218,9 +217,8 @@
                                         $("#Comments").val(selectedObject.Comments);
                                         $("#DonationAmount").val(selectedObject.DonationAmount);
 
-                                        var yourFormattedDate = moment(selectedObject.EventsDate).format('MM/DD/YYYY HH:mm A');
-                                        //alert(yourFormattedDate);
-                                        $("#EventsDate").val(selectedObject.EventsDate);
+                                        //var yourFormattedDate = moment(selectedObject.EventsDate).format('MM/DD/YYYY HH:mm A');
+                                        $("#EventsDate").val(ToJavaScriptDate(selectedObject.EventsDate));
 
                                         if (selectedObject.PaymentMode == 'Cheque') {
                                             $("input[name=PaymentMode][value='3']").prop("checked", true);
@@ -249,6 +247,21 @@
                     noResults: "", results: function (resultsCount) { }
                 }
             });
+
+
+            function ToJavaScriptDate(value) {
+                var pattern = /Date\(([^)]+)\)/;
+                var results = pattern.exec(value);
+                var dt = new Date(parseFloat(results[1]));
+                var day = dt.getDate() > 9 ? dt.getDate() : "0" + dt.getDate(); // format should be "DD" not "D" e.g 09
+                var month = (dt.getMonth() + 1) > 9 ? (dt.getMonth() + 1) : "0" + (dt.getMonth() + 1);
+                var hour = dt.getHours();
+                var minutes = dt.getMinutes() > 9 ? dt.getMinutes() : "0" + dt.getMinutes();
+                var seconds = dt.getSeconds() > 9 ? dt.getSeconds() : "0" + dt.getSeconds();
+                //return (dt.getMonth() + 1) + "/" + dt.getDate() + "/" + dt.getFullYear();  "2016-08-07T14:06:30"
+                var returnDate = (dt.getFullYear()) + "-" + month + "-" + day + "T" + hour + ":" + minutes + ":" + seconds;
+                return returnDate;
+            }
         });
     </script>
 

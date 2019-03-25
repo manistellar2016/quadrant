@@ -53,18 +53,18 @@ namespace MyNPO.Controllers
         public JsonResult EventSearch(string keyWord)
         {
             EntityContext entityContext = new EntityContext();
-            var result = entityContext.reportInfo.Where(q => q.Name.ToLower().StartsWith(keyWord)).Select(q => q.Name).Distinct().ToList();
+            var result = entityContext.reportInfo.Where(q => q.Date.Year >= DateTime.Now.Year && q.Date.Month >= DateTime.Now.Month && q.Date.Day >= DateTime.Now.Day && q.Name.ToLower().StartsWith(keyWord)).Select(q => q.Name).Distinct().ToList();
 
             return Json(result, JsonRequestBehavior.AllowGet);
         }
         [HttpGet]
         public JsonResult EventInfoSearch(string keyWord)
         {
-            CalendarInfo result2 = null;
+            Report result1 = null;
             EntityContext entityContext = new EntityContext();
-            var result1 = entityContext.reportInfo.FirstOrDefault(q => q.Name == keyWord && q.Date.Year >= DateTime.Now.Year && q.Date.Month >= DateTime.Now.Month && q.Date.Day >= DateTime.Now.Day);
-            if(result1!=null)
-                result2 = entityContext.calendarInfo.FirstOrDefault(q => q.Type == "TempleEvent" && q.ReferenceTxnID == result1.ReferenceTxnID);
+            var result2 = entityContext.calendarInfo.FirstOrDefault(q => q.Name == keyWord && q.Type == "TempleEvent");
+            if(result2!=null)
+                result1 = entityContext.reportInfo.FirstOrDefault(q => q.Name == keyWord && q.ReferenceTxnID == result2.ReferenceTxnID && q.Date.Year >= DateTime.Now.Year && q.Date.Month >= DateTime.Now.Month && q.Date.Day >= DateTime.Now.Day);
             var result = new PriestServices();
             if (result1 != null && result2 != null)
             {

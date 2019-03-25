@@ -109,15 +109,18 @@ namespace MyNPO.Controllers
                     {
                         var report = AddedTransactions(familyInfo);
 
-                        if (string.IsNullOrWhiteSpace(familyInfo.Donation) || report.Net == null)
+                        if (!string.IsNullOrWhiteSpace(familyInfo.Donation) && !string.IsNullOrWhiteSpace(report.Net))
                             entityContext.reportInfo.Add(report);
 
-                        status += $"--Thanks for the Donation of {familyInfo.Donation}";
+                        status += $"--Thanks for the Donation of ${familyInfo.Donation}. ";
                         entityContext.SaveChanges();
                         // Generated PDF Receipt and Send email attachment.
 
                         if (!string.IsNullOrWhiteSpace(familyInfo.Donation) && !string.IsNullOrWhiteSpace(report.TransactionID))
+                        {
                             ReceiptGenerator.GenerateDonationReceiptPdf(new Donation() { Name = report.Name, Email = report.FromEmailAddress, DonationAmount = report.Net, DonationType = "Cash", Phone = report.PhoneNo, Reason = report.Reason }, report.TransactionID);
+                            status = status + $"we sent the tax recepit to your mentioned mail id";
+                        }
                     }
                 }
                 else
@@ -127,14 +130,17 @@ namespace MyNPO.Controllers
 
                     var report=AddedTransactions(familyInfo);
 
-                    if(string.IsNullOrWhiteSpace(familyInfo.Donation) || report.Net == null)
+                    if(!string.IsNullOrWhiteSpace(familyInfo.Donation) && !string.IsNullOrWhiteSpace(report.Net))
                         entityContext.reportInfo.Add(report);
 
                     entityContext.SaveChanges();
-                    status = "Saved";
+                    status = $"Record Saved.--Thanks for the Donation of ${ familyInfo.Donation}. ";
                     // Generated PDF Receipt and Send email attachment.
                     if (!string.IsNullOrWhiteSpace(familyInfo.Donation) && !string.IsNullOrWhiteSpace(report.TransactionID))
+                    {
                         ReceiptGenerator.GenerateDonationReceiptPdf(new Donation() { Name = report.Name, Email = report.FromEmailAddress, DonationAmount = report.Net, DonationType = "Cash", Phone = report.PhoneNo, Reason = report.Reason }, report.TransactionID);
+                        status = status + $" We sent the tax recepit to your mentioned mail id";
+                    }
                 }
                 ModelState.Clear();
 

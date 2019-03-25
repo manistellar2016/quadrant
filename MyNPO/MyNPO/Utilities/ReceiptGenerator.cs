@@ -182,6 +182,18 @@ namespace MyNPO.Utilities
                         msg.Attachments.Add(attachment);
                         msg.IsBodyHtml = true;
 
+                        //EntityContext entityContext = new EntityContext();
+                        EntityContext entityContext = new EntityContext();
+                        var adminList = entityContext.adminUser.ToList();
+                        if (adminList != null && adminList.Count > 0)
+                        {
+                            var list = adminList.Select(q => q.Email).ToList();
+                            foreach (var email in list)
+                            {
+                                msg.To.Add(new MailAddress(email, email));
+                            }
+                        }
+
                         // Send email
                         SmtpClient smtp = new SmtpClient(SmtpHostName, 587);
 
