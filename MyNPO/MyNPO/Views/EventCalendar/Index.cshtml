@@ -253,7 +253,7 @@
                 var pattern = /Date\(([^)]+)\)/;
                 var results = pattern.exec(value);
                 var dt = new Date(parseFloat(results[1]));
-                var day = dt.getDate() > 9 ? dt.getDate() : "0" + dt.getDate(); // format should be "DD" not "D" e.g 09
+                var day = dt.getUTCDate() > 9 ? dt.getUTCDate() : "0" + dt.getUTCDate(); // format should be "DD" not "D" e.g 09
                 var month = (dt.getMonth() + 1) > 9 ? (dt.getMonth() + 1) : "0" + (dt.getMonth() + 1);
                 var hour = dt.getHours();
                 var minutes = dt.getMinutes() > 9 ? dt.getMinutes() : "0" + dt.getMinutes();

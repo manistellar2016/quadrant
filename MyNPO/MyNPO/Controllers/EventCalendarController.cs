@@ -60,10 +60,14 @@ namespace MyNPO.Controllers
         [HttpGet]
         public JsonResult EventInfoSearch(string keyWord)
         {
+            //var result1 = entityContext.calendarInfo.Join(entityContext.reportInfo, ci => ci.ReferenceTxnID, ri => ri.ReferenceTxnID, (ci, ri) => new { ci, ri })
+            //    .FirstOrDefault(ci => ci.ci.StartDate.Day >= DateTime.Now.Date.Day && ci.ci.StartDate.Month >= DateTime.Now.Month && ci.ci.StartDate.Year >= DateTime.Now.Year
+            //    && ci.ri.Date.Day >= DateTime.Now.Day && ci.ri.Date.Month >= DateTime.Now.Month && ci.ri.Date.Year >= DateTime.Now.Year);
+
             Report result1 = null;
             EntityContext entityContext = new EntityContext();
-            var result2 = entityContext.calendarInfo.FirstOrDefault(q => q.Name == keyWord && q.Type == "TempleEvent");
-            if(result2!=null)
+            var result2 = entityContext.calendarInfo.FirstOrDefault(q => q.Name == keyWord && q.Type == "TempleEvent" && q.StartDate.Year >= DateTime.Now.Year && q.StartDate.Month >= DateTime.Now.Month && q.StartDate.Day >= DateTime.Now.Day);
+            if (result2!=null)
                 result1 = entityContext.reportInfo.FirstOrDefault(q => q.Name == keyWord && q.ReferenceTxnID == result2.ReferenceTxnID && q.Date.Year >= DateTime.Now.Year && q.Date.Month >= DateTime.Now.Month && q.Date.Day >= DateTime.Now.Day);
             var result = new PriestServices();
             if (result1 != null && result2 != null)
