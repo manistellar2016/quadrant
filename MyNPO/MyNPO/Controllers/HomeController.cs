@@ -71,6 +71,7 @@ namespace MyNPO.Controllers
             report.Add(new SelectListItem() { Text = "USER-REPORT", Value = "1" });
             report.Add(new SelectListItem() { Text = "PAYPAL-REPORT", Value = "2" });
             report.Add(new SelectListItem() { Text = "KINDBASE-REPORT", Value = "3" });
+            report.Add(new SelectListItem() { Text = "PRIESTSERVICES-REPORT", Value = "4" });
             return report;
         }
         public ActionResult Report()
@@ -100,10 +101,12 @@ namespace MyNPO.Controllers
             {
                 if (reportUserInfo.TypeOfReport == 1)
                     reports = entityContext.reportInfo.Where(q => EntityFunctions.TruncateTime(q.Date) >= fromDate && EntityFunctions.TruncateTime(q.Date) <= toDate && q.TypeOfReport == Constants.SystemDonation).ToList();
+                else if (reportUserInfo.TypeOfReport == 2)
+                    reports = entityContext.reportInfo.Where(q => EntityFunctions.TruncateTime(q.Date) >= fromDate && EntityFunctions.TruncateTime(q.Date) <= toDate && q.TypeOfReport == Constants.PayPal).ToList();
                 else if (reportUserInfo.TypeOfReport == 3)
                     reports = entityContext.reportInfo.Where(q => EntityFunctions.TruncateTime(q.Date) >= fromDate && EntityFunctions.TruncateTime(q.Date) <= toDate && q.TypeOfReport == Constants.KindBase).ToList();
-                else
-                    reports = entityContext.reportInfo.Where(q => EntityFunctions.TruncateTime(q.Date) >= fromDate && EntityFunctions.TruncateTime(q.Date) <= toDate && q.TypeOfReport == Constants.PayPal).ToList();
+                else                   
+                    reports = entityContext.reportInfo.Where(q => EntityFunctions.TruncateTime(q.Date) >= fromDate && EntityFunctions.TruncateTime(q.Date) <= toDate && q.TypeOfReport == Constants.PriestService).ToList();
 
             }
             reportUserInfo.ReportInfo = reports;

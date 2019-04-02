@@ -149,12 +149,13 @@ namespace MyNPO.Controllers
                         entityContext.calendarInfo.AddOrUpdate(cInfo);
 
                         var rInfo = entityContext.reportInfo.FirstOrDefault(q => q.ReferenceTxnID == cInfo.ReferenceTxnID);
-                        if (rInfo != null)
+                        if (rInfo != null && priestServices.PaymentMode != "1")
                         {
                             rInfo.Name = priestServices.Name; rInfo.FromEmailAddress = priestServices.Email; rInfo.Net = GetPriceByService(priestServices.PriestServicesList);
                             rInfo.PhoneNo = priestServices.Phone; rInfo.PriestServicesList = priestServices.PriestServicesList; rInfo.Date = dt;
                             rInfo.Reason = priestServices.Comments; rInfo.Description = priestServices.PaymentMode == "1" ? "PayPal" : priestServices.PaymentMode == "2" ? "Cash" : "Cheque";
-                            rInfo.TypeOfReport = priestServices.PaymentMode == "1" ? Constants.PayPal : Constants.SystemDonation;
+                            rInfo.CurrencyType = rInfo.Description;
+                            rInfo.TypeOfReport = Constants.PriestService;
                         }
                         entityContext.Entry(rInfo).State = System.Data.Entity.EntityState.Modified;
                         entityContext.reportInfo.AddOrUpdate(rInfo);
@@ -187,10 +188,13 @@ namespace MyNPO.Controllers
                             TransactionGuid = guid,
                             ReferenceTxnID = guid.ToString().Replace("-", ""),
                             UploadDateTime = dt,
-                            TypeOfReport = priestServices.PaymentMode == "1" ? Constants.PayPal : Constants.SystemDonation
+                            TypeOfReport = Constants.PriestService,
+                            CurrencyType = priestServices.PaymentMode == "1" ? "PayPal" : priestServices.PaymentMode == "2" ? "Cash" : "Cheque"
+
                         };
 
-                        entityContext.reportInfo.Add(report);
+                        if(priestServices.PaymentMode != "1")
+                            entityContext.reportInfo.Add(report);
 
                         // TODO: Add insert logic here
                         ModelState.Clear();
