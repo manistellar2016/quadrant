@@ -109,10 +109,11 @@ namespace MyNPO.Controllers
             var cEvent = new List<CalendarEvent>();
             try
             {
-                var data = entityContext.calendarInfo.Join(entityContext.reportInfo, ci=>ci.ReferenceTxnID, ri=>ri.ReferenceTxnID,(ci,ri)=> new { cinfo=ci, rinfo=ri}).Where(t => t.cinfo.Type == "TempleEvent").ToList();
+                var dt = DateTime.Now.AddMonths(-1);
+                var data = entityContext.calendarInfo.Where(t => t.Type == "TempleEvent" && t.StartDate.Month >= dt.Date.Month).OrderByDescending(t => t.StartDate).ToList();
                 data.ForEach(q =>
                 {
-                    cEvent.Add(new CalendarEvent() { id = q.cinfo.Id, text = q.cinfo.Name + " "+ q.cinfo.Text + " " + q.rinfo.FromEmailAddress + " "+ q.rinfo.PhoneNo + " "+ q.cinfo.Address, start_date = q.cinfo.StartDate, end_date = q.cinfo.EndDate });
+                    cEvent.Add(new CalendarEvent() { id = q.Id, text = q.Name + " " + q.Text + q.Address, start_date = q.StartDate, end_date = q.EndDate });
                 });
             }
             catch (Exception ex)
