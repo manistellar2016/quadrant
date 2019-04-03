@@ -102,11 +102,11 @@ namespace MyNPO.Controllers
                 if (reportUserInfo.TypeOfReport == 1)
                     reports = entityContext.reportInfo.Where(q => EntityFunctions.TruncateTime(q.Date) >= fromDate && EntityFunctions.TruncateTime(q.Date) <= toDate && q.TypeOfReport == Constants.SystemDonation).ToList();
                 else if (reportUserInfo.TypeOfReport == 2)
-                    reports = entityContext.reportInfo.Where(q => EntityFunctions.TruncateTime(q.Date) >= fromDate && EntityFunctions.TruncateTime(q.Date) <= toDate && q.TypeOfReport == Constants.PayPal && q.Net != "0").ToList();
+                    reports = entityContext.reportInfo.Where(q => EntityFunctions.TruncateTime(q.Date) >= fromDate && EntityFunctions.TruncateTime(q.Date) <= toDate && q.TypeOfReport == Constants.PayPal).ToList();
                 else if (reportUserInfo.TypeOfReport == 3)
                     reports = entityContext.reportInfo.Where(q => EntityFunctions.TruncateTime(q.Date) >= fromDate && EntityFunctions.TruncateTime(q.Date) <= toDate && q.TypeOfReport == Constants.KindBase).ToList();
                 else                   
-                    reports = entityContext.reportInfo.Where(q => EntityFunctions.TruncateTime(q.Date) >= fromDate && EntityFunctions.TruncateTime(q.Date) <= toDate && q.TypeOfReport == Constants.PriestService).ToList();
+                    reports = entityContext.reportInfo.Where(q => EntityFunctions.TruncateTime(q.Date) >= fromDate && EntityFunctions.TruncateTime(q.Date) <= toDate && q.TypeOfReport == Constants.PriestService && q.Net != "0").ToList();
 
             }
             reportUserInfo.ReportInfo = reports;

@@ -159,7 +159,7 @@ namespace MyNPO.Controllers
                             rInfo.TypeOfReport = Constants.PriestService;
                         }
 
-                        if (priestServices.PaymentMode != "1")
+                        if (priestServices.PaymentMode == "1")
                             rInfo.Net = "0"; // the reason of set 0, we will upload the paypal report later.
 
                         entityContext.Entry(rInfo).State = System.Data.Entity.EntityState.Modified;
@@ -198,7 +198,7 @@ namespace MyNPO.Controllers
 
                         };
 
-                        if (priestServices.PaymentMode != "1")
+                        if (priestServices.PaymentMode == "1")
                             report.Net = "0";//// the reason of set 0, we will upload the paypal report later.
 
                         entityContext.reportInfo.Add(report);
