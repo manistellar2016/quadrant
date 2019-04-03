@@ -110,10 +110,10 @@ namespace MyNPO.Controllers
             try
             {
                 var dt = DateTime.Now.AddMonths(-1);
-                var data = entityContext.calendarInfo.Where(t => t.Type == "TempleEvent" && t.StartDate.Month >= dt.Date.Month).OrderByDescending(t => t.StartDate).ToList();
+                var data = entityContext.calendarInfo.Join(entityContext.reportInfo, ci => ci.ReferenceTxnID, ri => ri.ReferenceTxnID, (ci, ri) => new { cinfo = ci, rinfo = ri }).Where(t => t.cinfo.Type == "TempleEvent" && t.cinfo.StartDate.Month >= dt.Date.Month).OrderByDescending(t=> t.cinfo.StartDate).ToList();
                 data.ForEach(q =>
                 {
-                    cEvent.Add(new CalendarEvent() { id = q.Id, text = q.Name + " " + q.Text + q.Address, start_date = q.StartDate, end_date = q.EndDate });
+                    cEvent.Add(new CalendarEvent() { id = q.cinfo.Id, text = q.cinfo.Name + " " + q.cinfo.Text + " " + q.rinfo.FromEmailAddress + " " + q.rinfo.PhoneNo + " " + q.cinfo.Address, start_date = q.cinfo.StartDate, end_date = q.cinfo.EndDate });
                 });
             }
             catch (Exception ex)
@@ -150,7 +150,7 @@ namespace MyNPO.Controllers
                         entityContext.calendarInfo.AddOrUpdate(cInfo);
 
                         var rInfo = entityContext.reportInfo.FirstOrDefault(q => q.ReferenceTxnID == cInfo.ReferenceTxnID);
-                        if (rInfo != null && priestServices.PaymentMode != "1")
+                        if (rInfo != null)
                         {
                             rInfo.Name = priestServices.Name; rInfo.FromEmailAddress = priestServices.Email; rInfo.Net = GetPriceByService(priestServices.PriestServicesList);
                             rInfo.PhoneNo = priestServices.Phone; rInfo.PriestServicesList = priestServices.PriestServicesList; rInfo.Date = dt;
@@ -158,6 +158,10 @@ namespace MyNPO.Controllers
                             rInfo.CurrencyType = rInfo.Description;
                             rInfo.TypeOfReport = Constants.PriestService;
                         }
+
+                        if (priestServices.PaymentMode != "1")
+                            rInfo.Net = "0"; // the reason of set 0, we will upload the paypal report later.
+
                         entityContext.Entry(rInfo).State = System.Data.Entity.EntityState.Modified;
                         entityContext.reportInfo.AddOrUpdate(rInfo);
                         entityContext.SaveChanges();
@@ -194,8 +198,10 @@ namespace MyNPO.Controllers
 
                         };
 
-                        if(priestServices.PaymentMode != "1")
-                            entityContext.reportInfo.Add(report);
+                        if (priestServices.PaymentMode != "1")
+                            report.Net = "0";//// the reason of set 0, we will upload the paypal report later.
+
+                        entityContext.reportInfo.Add(report);
 
                         // TODO: Add insert logic here
                         ModelState.Clear();
