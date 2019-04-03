@@ -53,7 +53,7 @@ namespace MyNPO.Controllers
         public JsonResult EventSearch(string keyWord)
         {
             EntityContext entityContext = new EntityContext();
-            var result = entityContext.reportInfo.Where(q => q.Date.Year >= DateTime.Now.Year && q.Date.Month >= DateTime.Now.Month && q.Date.Day >= DateTime.Now.Day && q.Name.ToLower().StartsWith(keyWord)).Select(q => q.Name).Distinct().ToList();
+            var result = entityContext.calendarInfo.Where(q => q.StartDate.Year >= DateTime.Now.Year && q.StartDate.Month >= DateTime.Now.Month && q.StartDate.Day >= DateTime.Now.Day && q.Name.ToLower().StartsWith(keyWord)).Select(q => q.Name).Distinct().ToList();
 
             return Json(result, JsonRequestBehavior.AllowGet);
         }
