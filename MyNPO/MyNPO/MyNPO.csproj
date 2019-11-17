@@ -328,6 +328,7 @@
     <Content Include="Scripts\dhtmlxScheduler\imgs_glossy\top-separator.gif" />
     <Content Include="Scripts\dhtmlxScheduler\imgs_glossy\white_tab.png" />
     <Content Include="Scripts\dhtmlxScheduler\imgs_glossy\white_tab_wide.png" />
+    <Content Include="Scripts\JavaScript.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.js" />
